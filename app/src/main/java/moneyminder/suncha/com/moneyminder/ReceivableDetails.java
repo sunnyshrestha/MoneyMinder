@@ -69,7 +69,6 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
                 createAlertDialog();
             }
         });
-
     }
 
     @OnCheckedChanged(R.id.reminderSwitch)
@@ -87,9 +86,7 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
             reminderDetails.setText(null);
             reminderDetailsWrapper.setVisibility(GONE);
         }
-
     }
-
 
     @OnClick(R.id.lentDateButton)
     public void pickDate() {
@@ -103,7 +100,7 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
         dialog.show(getSupportFragmentManager(), "lentdate");
     }
 
-
+    //Create an alert if a user presses the back button (on the toolbar) from the activity
     private void createAlertDialog() {
         android.app.FragmentManager fragmentManager = getFragmentManager();
         goBackWithoutSavingFragment goBackDialog = new goBackWithoutSavingFragment();
@@ -112,6 +109,7 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
     }
 
 
+    //Create an alert if a user presses the back button from the activity
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             createAlertDialog();
@@ -119,13 +117,7 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
             return true;
         }
         return super.onKeyDown(keyCode, event);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.receivablesmenu, menu);
-        return true;
-    }
+    }    
 
     @Override
     public void onDateSet(DatePickerDialog dialog, int year, int monthOfYear, int dayOfMonth) {
@@ -144,13 +136,17 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
             default:
                 break;
         }
-
-
     }
 
     @Override
     public void onTimeSet(ViewGroup viewGroup, int hourOfDay, int minute) {
 
+    }
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.receivablesmenu, menu);
+        return true;
     }
 }
 
