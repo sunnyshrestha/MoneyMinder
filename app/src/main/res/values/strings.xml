@@ -33,6 +33,9 @@
     <string name="OK">OK</string>
     <string name="Cancel">CANCEL</string>
     <string name="change">Change</string>
+    
+    //Error message
+    <string name="saveError">Name, amount and date must be filled</string>
 
 
 </resources>
