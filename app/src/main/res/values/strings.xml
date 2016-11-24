@@ -17,7 +17,7 @@
     //Text Fields
     <string name="whoDidYouLendItTo">Who did you lend the money to?</string>
     <string name="totalAmountLent">Total amount you lent</string>
-    <string name="date">Lent date</string>
+    <string name="date">Lent date (MM/dd/YYYY)</string>
     <string name="notes">Remarks (optional)</string>
     <string name="notes_long">You can enter a description to help you remember better</string>
 
