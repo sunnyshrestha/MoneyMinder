@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="discardChanges">Discard Changes?</string>
+    <string name="nothingWillBeSaved">If you go back without saving, your entries will be lost.</string>
+</resources>

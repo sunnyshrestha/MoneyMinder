@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_receivable_details"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context="moneyminder.suncha.com.moneyminder.ReceivableDetails">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/receivableToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorPrimary"
+        android:elevation="@dimen/toolbar_elevation"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/receivableToolbar">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/padding"
+            android:layout_marginLeft="@dimen/activity_vertical_margin"
+            android:layout_marginRight="@dimen/activity_vertical_margin"
+            android:layout_marginTop="@dimen/padding">
+
+            <com.github.florent37.materialtextfield.MaterialTextField
+                android:id="@+id/nameOfLenderWrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:mtf_animationDuration="150"
+                app:mtf_cardCollapsedHeight="1dp"
+                app:mtf_image="@drawable/ic_action_face_unlock"
+                app:mtf_labelColor="@color/white"
+                app:mtf_openKeyboardOnFocus="true">
+
+                <EditText
+                    android:id="@+id/nameOfLender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/whoDidYouLendItTo"
+                    android:inputType="textPersonName"
+                    android:maxLines="1" />
+
+            </com.github.florent37.materialtextfield.MaterialTextField>
+
+            <com.github.florent37.materialtextfield.MaterialTextField
+                android:id="@+id/amountLentWrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/nameOfLenderWrapper"
+                android:layout_marginTop="@dimen/padding"
+                app:mtf_animationDuration="150"
+                app:mtf_cardCollapsedHeight="1dp"
+                app:mtf_image="@drawable/ic_action_editor_attach_money"
+                app:mtf_labelColor="@color/white"
+                app:mtf_openKeyboardOnFocus="true">
+
+                <EditText
+                    android:id="@+id/amountLent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/totalAmountLent"
+                    android:inputType="number"
+                    android:maxLines="1" />
+            </com.github.florent37.materialtextfield.MaterialTextField>
+
+            <RelativeLayout
+                android:id="@+id/dateLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/amountLentWrapper"
+                android:layout_marginTop="@dimen/padding"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/lentDateWrapper"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding"
+                    android:theme="@style/TextLabel">
+
+                    <EditText
+                        android:id="@+id/lentDate"
+                        android:layout_width="123dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/date"
+                        android:inputType="date"
+                        android:maxLines="1"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white" />
+                </android.support.design.widget.TextInputLayout>
+
+                <Button
+                    android:id="@+id/lentDateButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/lentDateWrapper"
+                    android:layout_alignParentRight="true"
+
+                    android:gravity="center"
+                    android:text="@string/pickDate" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/reminderWrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/dateLayout"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/padding"
+                android:weightSum="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/setReminder"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+                <Switch
+                    android:id="@+id/reminderSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:checked="false"
+                    android:padding="@dimen/padding" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/reminderDetailsWrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/reminderWrapper"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/reminderDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/changeReminderButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="@string/change" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/remarksFixed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/reminderDetailsWrapper"
+                android:layout_marginTop="24dp"
+                android:paddingBottom="4dp"
+                android:text="@string/notes"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+
+            <EditText
+                android:id="@+id/remarks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/remarksFixed"
+                android:layout_marginBottom="@dimen/padding"
+                android:layout_marginTop="@dimen/padding"
+                android:background="@drawable/rounded_corner"
+                android:hint="@string/notes_long"
+                android:inputType="textMultiLine"
+                android:minLines="3"
+                android:paddingLeft="@dimen/padding"
+                android:paddingRight="@dimen/padding"
+                android:scrollbars="vertical"
+                android:textColor="@color/black"
+                android:textColorHint="@color/grey" />
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+</RelativeLayout>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="color_list">
+        <!--Receivable-->
+        <item>@android:color/holo_green_dark</item>
+        <!--Payable-->
+        <item>@android:color/holo_red_dark</item>
+    </integer-array>
+</resources>

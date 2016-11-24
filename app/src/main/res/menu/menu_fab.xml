@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_receivable"
+        android:title="@string/newReceivables"
+        android:icon="@drawable/ic_action_get"
+        android:orderInCategory="0"/>
+
+    <item
+        android:icon="@drawable/ic_action_pay"
+        android:title="@string/newPayable"
+        android:id="@+id/action_payable"
+        android:orderInCategory="1"/>
+
+</menu>

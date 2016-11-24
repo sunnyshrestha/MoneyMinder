@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">Money Minder</string>
+    <string name="receivable">Receivables</string>
+    <string name="payable">Payables</string>
+    <string name="reminders">Reminders</string>
+
+    //For Floating Action Button
+    <string name="newReceivables">New Receivable</string>
+    <string name="newPayable">New Payable</string>
+
+    //Notes on receivables
+    <string name="notes_receivable">Handy notes on the amount you lent</string>
+
+    //Receivable Details toolbar title
+    <string name="receivable_details">Receivable Details</string>
+
+    //Text Fields
+    <string name="whoDidYouLendItTo">Who did you lend the money to?</string>
+    <string name="totalAmountLent">Total amount you lent</string>
+    <string name="date">Lent date</string>
+    <string name="notes">Remarks (optional)</string>
+    <string name="notes_long">You can enter a description to help you remember better</string>
+
+    <string name="discardChanges">Discard changes?</string>
+    <string name="nothingWillBeSaved">Discard any changes made and go back?</string>
+
+    //Buttons
+    <string name="pickDate">Pick date</string>
+
+    //Reminder
+    <string name="setReminder">Reminder</string>
+    <string name="done">Done</string>
+    <string name="OK">OK</string>
+    <string name="Cancel">CANCEL</string>
+    <string name="change">Change</string>
+
+
+</resources>
