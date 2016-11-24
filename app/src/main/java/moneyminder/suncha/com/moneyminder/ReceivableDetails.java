@@ -176,15 +176,40 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
     public boolean onOptionsItemSelected(MenuItem item) {
     // Handle item selection
     switch (item.getItemId()) {
-        case R.id.saveReceivables:
+        case R.id.saveReceivables:{
             //Step 1: Check if the name filed, amount field, and the lent date field are not empty
-            //Step 2: Check if the dates are in propoer format            
-            //Step 3: If reminder has been set, check if reminder date is in proper format
+            if(nameOfLender.getText().toString().trim().length()==0 || amountLent.getText().toString().trim().length()==0 || lentDate.getText().toString().trim().length()==0){
+            Toast.makeText(getApplicationContext(),R.string.saveError,Toast.LENGTH_SHORT).show();
+                break;
+            }
+            //Step 2: Check if lent date is in proper format
+            if(isDateValid(amountLent.getText().toString())){
+            //WRITE DATA TO DATABASE
+            }else{
+                Toast.makeText(getApplicationContext(),R.string.dateFormarError.Toast.LENGTH_SHORT).show();
+                break;
+            }         
+            
+        }                         
             //Step 4: When change button is clicked, call datepicker and time picker
             return true;
         default:
             return super.onOptionsItemSelected(item);
     }
+        
+        //Method to check if date is valid
+        public boolean isDateValid(String date){
+        try{
+            SimpleDateFormat dateFormat = new SimpleDateFormat (MM/dd/yyyy);
+            date=amountLent.getText().toString();
+            dateFormat.setLenient(false);
+            dateFormat.parse(date);
+            return true;
+        }catch(ParseException e){
+        e.printStackTrace();
+        return false;
+        }
+        }
 }
 
 //TODO set switch to inflate date and time picker and set reminder
