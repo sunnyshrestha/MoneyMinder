@@ -47,6 +47,9 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
     RelativeLayout reminderDetailsWrapper;
     @BindView(R.id.reminderDetails)
     TextView reminderDetails;
+    @BindView(R.id.changeReminderButton)
+    Button changeReminderButton;
+    
 
     int datePickerID = 0; //If this is 1, then it refers to lend date picker and if it is 2, it refers to reminder date
 
@@ -87,6 +90,17 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
             reminderDetailsWrapper.setVisibility(GONE);
         }
     }
+    
+    //Call reminder time after reminder date is set
+    public void reminderTime(){
+        Calendar nowTime = Calendar.getInstance();
+        GridTimePickerDialog timeDialog = GridTimePickerDialog.newInstance(
+            ReceivableDetails.this,
+            now.get(Calendar.HOUR_OF_DAY),
+            now.get(Calendar.MINUTE)
+            DateFormat.is24HourFormat(ReceivableDetails.this)); 
+        timeDialog.show(getSupportFragmentManager(),"reminderTime");        
+    }
 
     @OnClick(R.id.lentDateButton)
     public void pickDate() {
@@ -96,6 +110,7 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
                 now.get(Calendar.YEAR),
                 now.get(Calendar.MONTH),
                 now.get(Calendar.DAY_OF_MONTH));
+
         datePickerID = 1;
         dialog.show(getSupportFragmentManager(), "lentdate");
     }
@@ -108,7 +123,6 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
         goBackDialog.show(fragmentManager, "backwithoutsaving");
     }
 
-
     //Create an alert if a user presses the back button from the activity
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -117,7 +131,11 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
             return true;
         }
         return super.onKeyDown(keyCode, event);
-    }    
+    }
+    
+    //User decides to change the reminder that s/he had set previously
+    @OnClick(R.id.changeReminderButton)
+    reminderDate();    
 
     @Override
     public void onDateSet(DatePickerDialog dialog, int year, int monthOfYear, int dayOfMonth) {
@@ -130,6 +148,7 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
                 lentdate.setText(DateFormat.getDateFormat(this).format(cal.getTime()));
                 break;
             case 2:
+                reminderTime();
                 reminderDetailsWrapper.setVisibility(View.VISIBLE);
                 reminderDetails.setText(DateFormat.getDateFormat(this).format(cal.getTime()));
                 break;
@@ -140,6 +159,10 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
 
     @Override
     public void onTimeSet(ViewGroup viewGroup, int hourOfDay, int minute) {
+        Calendar cal = new java.util.GregorianCalendar();
+        cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
+        cal.set(Calendar.MINUTE, minute);
+        reminderDetails.append(" at" + DateFormat.getTimeFormat(this).format(cal.getTime()));
 
     }
     
@@ -147,6 +170,20 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.receivablesmenu, menu);
         return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+    // Handle item selection
+    switch (item.getItemId()) {
+        case R.id.saveReceivables:
+            //Step 1: Check if the name filed, amount field, and the lent date field are not empty
+            //Step 2: Check if the dates are in propoer format            
+            //Step 3: If reminder has been set, check if reminder date is in proper format
+            //Step 4: When change button is clicked, call datepicker and time picker
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
     }
 }
 
