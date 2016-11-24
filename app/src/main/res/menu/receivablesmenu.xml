@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:myapp="http://schemas.android.com/apk/res-auto">
 <item
-    android:id="@+id/saceReceivables"
+    android:id="@+id/saveReceivables"
     android:icon="@drawable/ic_action_action_done"
     android:menuCategory="container"
     android:orderInCategory="0"
