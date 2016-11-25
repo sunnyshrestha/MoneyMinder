@@ -36,6 +36,8 @@
     
     //Error message
     <string name="saveError">Name, amount and date must be filled</string>
+    <string name="dateFormatError">Date should be in MM/dd/yyyy format</string>
+    <string name="reminderText">Reminder set for</string>
 
 
 </resources>

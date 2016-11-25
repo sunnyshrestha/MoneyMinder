@@ -70,7 +70,7 @@
 
                 <EditText
                     android:id="@+id/amountLent"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="@string/totalAmountLent"
                     android:inputType="number"
@@ -85,19 +85,19 @@
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/amountLentWrapper"
                 android:layout_marginTop="@dimen/padding"
-                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/lentDateWrapper"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding"
-                    android:theme="@style/TextLabel">
+                    android:theme="@style/TextLabel"
+                    android:layout_alignParentLeft="true">
 
                     <EditText
                         android:id="@+id/lentDate"
-                        android:layout_width="123dp"
+                        android:layout_width="225dp"
                         android:layout_height="wrap_content"
                         android:hint="@string/date"
                         android:inputType="date"
@@ -112,7 +112,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/lentDateWrapper"
                     android:layout_alignParentRight="true"
-
+                    android:layout_marginLeft="@dimen/padding"
                     android:gravity="center"
                     android:text="@string/pickDate" />
             </RelativeLayout>

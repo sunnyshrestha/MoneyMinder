@@ -8,21 +8,25 @@ import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.philliphsu.bottomsheetpickers.date.BottomSheetDatePickerDialog;
 import com.philliphsu.bottomsheetpickers.date.DatePickerDialog;
 import com.philliphsu.bottomsheetpickers.time.BottomSheetTimePickerDialog;
+import com.philliphsu.bottomsheetpickers.time.grid.GridTimePickerDialog;
 
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import butterknife.BindView;
@@ -31,13 +35,14 @@ import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
 import static android.view.View.GONE;
+import static moneyminder.suncha.com.moneyminder.R.id.lentDate;
 
 public class ReceivableDetails extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, BottomSheetTimePickerDialog.OnTimeSetListener {
     @BindView(R.id.receivableToolbar)
     Toolbar receivableToolbar;
     @BindView(R.id.lentDateButton)
     Button datePicker;
-    @BindView(R.id.lentDate)
+    @BindView(lentDate)
     EditText lentdate;
     @BindView(R.id.lentDateWrapper)
     TextInputLayout lentDateWrapper; //required to set validation
@@ -49,7 +54,11 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
     TextView reminderDetails;
     @BindView(R.id.changeReminderButton)
     Button changeReminderButton;
-    
+    @BindView(R.id.nameOfLender)
+    EditText nameOfLender;
+    @BindView(R.id.amountLent)
+    EditText amountLent;
+
 
     int datePickerID = 0; //If this is 1, then it refers to lend date picker and if it is 2, it refers to reminder date
 
@@ -72,11 +81,18 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
                 createAlertDialog();
             }
         });
+
+        changeReminderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reminderDate();
+            }
+        });
     }
 
     @OnCheckedChanged(R.id.reminderSwitch)
     public void reminderDate() {
-        if(reminderSwitch.isChecked()){
+        if (reminderSwitch.isChecked()) {
             Calendar now = Calendar.getInstance();
             BottomSheetDatePickerDialog dialog = BottomSheetDatePickerDialog.newInstance(
                     ReceivableDetails.this,
@@ -85,21 +101,21 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
                     now.get(Calendar.DAY_OF_MONTH));
             datePickerID = 2;
             dialog.show(getSupportFragmentManager(), "reminderDate");
-        }else{
+        } else {
             reminderDetails.setText(null);
             reminderDetailsWrapper.setVisibility(GONE);
         }
     }
-    
+
     //Call reminder time after reminder date is set
-    public void reminderTime(){
+    public void reminderTime() {
         Calendar nowTime = Calendar.getInstance();
         GridTimePickerDialog timeDialog = GridTimePickerDialog.newInstance(
-            ReceivableDetails.this,
-            now.get(Calendar.HOUR_OF_DAY),
-            now.get(Calendar.MINUTE)
-            DateFormat.is24HourFormat(ReceivableDetails.this)); 
-        timeDialog.show(getSupportFragmentManager(),"reminderTime");        
+                ReceivableDetails.this,
+                nowTime.get(Calendar.HOUR_OF_DAY),
+                nowTime.get(Calendar.MINUTE),
+                DateFormat.is24HourFormat(ReceivableDetails.this));
+        timeDialog.show(getSupportFragmentManager(), "reminderTime");
     }
 
     @OnClick(R.id.lentDateButton)
@@ -114,6 +130,7 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
         datePickerID = 1;
         dialog.show(getSupportFragmentManager(), "lentdate");
     }
+
 
     //Create an alert if a user presses the back button (on the toolbar) from the activity
     private void createAlertDialog() {
@@ -132,10 +149,9 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
         }
         return super.onKeyDown(keyCode, event);
     }
-    
+
     //User decides to change the reminder that s/he had set previously
-    @OnClick(R.id.changeReminderButton)
-    reminderDate();    
+
 
     @Override
     public void onDateSet(DatePickerDialog dialog, int year, int monthOfYear, int dayOfMonth) {
@@ -150,7 +166,7 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
             case 2:
                 reminderTime();
                 reminderDetailsWrapper.setVisibility(View.VISIBLE);
-                reminderDetails.setText(DateFormat.getDateFormat(this).format(cal.getTime()));
+                reminderDetails.setText(R.string.reminderText + " "+DateFormat.getDateFormat(this).format(cal.getTime()));
                 break;
             default:
                 break;
@@ -162,54 +178,58 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
         Calendar cal = new java.util.GregorianCalendar();
         cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
         cal.set(Calendar.MINUTE, minute);
-        reminderDetails.append(" at" + DateFormat.getTimeFormat(this).format(cal.getTime()));
+        reminderDetails.append(" at " + DateFormat.getTimeFormat(this).format(cal.getTime()));
 
     }
-    
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.receivablesmenu, menu);
         return true;
     }
-    
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-    // Handle item selection
-    switch (item.getItemId()) {
-        case R.id.saveReceivables:{
-            //Step 1: Check if the name filed, amount field, and the lent date field are not empty
-            if(nameOfLender.getText().toString().trim().length()==0 || amountLent.getText().toString().trim().length()==0 || lentDate.getText().toString().trim().length()==0){
-            Toast.makeText(getApplicationContext(),R.string.saveError,Toast.LENGTH_SHORT).show();
-                break;
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.saveReceivables: {
+                //Step 1: Check if the name filed, amount field, and the lent date field are not empty
+                if (nameOfLender.getText().toString().trim().length() == 0 || amountLent.getText().toString().trim().length() == 0 || lentdate.getText().toString().trim().length() == 0) {
+                    Toast.makeText(getApplicationContext(), R.string.saveError, Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                //Step 2: Check if lent date is in proper format
+                if (isDateValid(amountLent.getText().toString())) {
+                    //WRITE DATA TO DATABASE
+                    Toast.makeText(getApplicationContext(), "Now you need to write to database", Toast.LENGTH_SHORT).show();
+                    break;
+                } else {
+                    Toast.makeText(getApplicationContext(), R.string.dateFormatError, Toast.LENGTH_SHORT).show();
+                    break;
+                }
             }
-            //Step 2: Check if lent date is in proper format
-            if(isDateValid(amountLent.getText().toString())){
-            //WRITE DATA TO DATABASE
-            }else{
-                Toast.makeText(getApplicationContext(),R.string.dateFormarError.Toast.LENGTH_SHORT).show();
-                break;
-            }         
-            
-        }                         
             //Step 4: When change button is clicked, call datepicker and time picker
-            return true;
-        default:
-            return super.onOptionsItemSelected(item);
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return true;
     }
-        
-        //Method to check if date is valid
-        public boolean isDateValid(String date){
-        try{
-            SimpleDateFormat dateFormat = new SimpleDateFormat (MM/dd/yyyy);
-            date=amountLent.getText().toString();
+
+
+    //Method to check if date is valid
+
+    public boolean isDateValid(String date) {
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+            date = lentdate.getText().toString();
             dateFormat.setLenient(false);
             dateFormat.parse(date);
             return true;
-        }catch(ParseException e){
-        e.printStackTrace();
-        return false;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
         }
-        }
+    }
 }
 
 //TODO set switch to inflate date and time picker and set reminder
