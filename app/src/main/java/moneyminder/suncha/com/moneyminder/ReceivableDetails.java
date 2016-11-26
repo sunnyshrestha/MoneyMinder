@@ -61,6 +61,7 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
 
 
     int datePickerID = 0; //If this is 1, then it refers to lend date picker and if it is 2, it refers to reminder date
+    String reminderDateChosenbyUser; //The reminder date that the user chooses is assigned to this variable so that we can later check if the reminder date is later than the lent date or not
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,6 +179,7 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
         Calendar cal = new java.util.GregorianCalendar();
         cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
         cal.set(Calendar.MINUTE, minute);
+        reminderDateChosenbyUser=DateFormat.getTimeFormat(this).format(cal.getTime());
         reminderDetails.append(" at " + DateFormat.getTimeFormat(this).format(cal.getTime()));
 
     }
@@ -200,15 +202,17 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
                 }
                 //Step 2: Check if lent date is in proper format
                 if (isDateValid(amountLent.getText().toString())) {
-                    //WRITE DATA TO DATABASE
-                    Toast.makeText(getApplicationContext(), "Now you need to write to database", Toast.LENGTH_SHORT).show();
+                    //Check if the reminder date is set after the lend date or not
+                    //But do this only if reminder was picked
+                    if(reminderSwitch.isChecked()){
+                        checkDateOrder(lentdate.getText().toString(),reminderDateChosenbyUser);                    
+                    }    
                     break;
                 } else {
                     Toast.makeText(getApplicationContext(), R.string.dateFormatError, Toast.LENGTH_SHORT).show();
                     break;
                 }
             }
-            //Step 4: When change button is clicked, call datepicker and time picker
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -241,7 +245,11 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
             if (lent.after(reminder) || lent.equals(reminder)) {
                 //Throw a toast asking the user to recheck dates. Reminder date has to be later than lent date
                 Toast.makeText(getApplicationContext(),R.string.recheckDates,Toast.LENGTH_SHORT).show();
-            }
+            }else{
+                //Method to write to database
+                //WRITE DATA TO DATABASE
+                Toast.makeText(getApplicationContext(), "Now you need to write to database", Toast.LENGTH_SHORT).show();
+            }            
         } catch (ParseException e) {
             e.printStackTrace();
         }
