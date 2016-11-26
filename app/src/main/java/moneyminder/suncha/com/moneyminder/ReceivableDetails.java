@@ -166,7 +166,7 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
             case 2:
                 reminderTime();
                 reminderDetailsWrapper.setVisibility(View.VISIBLE);
-                reminderDetails.setText(R.string.reminderText + " "+DateFormat.getDateFormat(this).format(cal.getTime()));
+                reminderDetails.setText(getResources().getString(R.string.reminderText) + " "+DateFormat.getDateFormat(this).format(cal.getTime()));
                 break;
             default:
                 break;
@@ -217,7 +217,6 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
 
 
     //Method to check if date is valid
-
     public boolean isDateValid(String date) {
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -230,6 +229,24 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
             return false;
         }
     }
+    
+    //Method that checks if the reminder date is after the lent date or not
+    public void checkDateOrder(String lentDate, String reminderDate) {
+        //checks if the followup date is after the meetingDate or not
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+            Date lent = simpleDateFormat.parse(lentDate);
+            Date reminder = simpleDateFormat.parse(reminderDate);
+
+            if (lent.after(reminder) || lent.equals(reminder)) {
+                //Throw a toast asking the user to recheck dates. Reminder date has to be later than lent date
+                Toast.makeText(getApplicationContext(),R.string.recheckDates,Toast.LENGTH_SHORT).show();
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+    
 }
 
 //TODO set switch to inflate date and time picker and set reminder
