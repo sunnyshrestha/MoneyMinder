@@ -1,9 +1,9 @@
 package moneyminder.suncha.com.moneyminder;
 
 
+import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.view.KeyEvent;
@@ -24,10 +24,10 @@ import com.philliphsu.bottomsheetpickers.date.DatePickerDialog;
 import com.philliphsu.bottomsheetpickers.time.BottomSheetTimePickerDialog;
 import com.philliphsu.bottomsheetpickers.time.grid.GridTimePickerDialog;
 
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -152,8 +152,6 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
     }
 
     //User decides to change the reminder that s/he had set previously
-
-
     @Override
     public void onDateSet(DatePickerDialog dialog, int year, int monthOfYear, int dayOfMonth) {
         Calendar cal = new java.util.GregorianCalendar();
@@ -167,7 +165,8 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
             case 2:
                 reminderTime();
                 reminderDetailsWrapper.setVisibility(View.VISIBLE);
-                reminderDetails.setText(getResources().getString(R.string.reminderText) + " "+DateFormat.getDateFormat(this).format(cal.getTime()));
+                reminderDateChosenbyUser = DateFormat.getDateFormat(this).format(cal.getTime());
+                reminderDetails.setText(getResources().getString(R.string.reminderText) + " " + DateFormat.getDateFormat(this).format(cal.getTime()));
                 break;
             default:
                 break;
@@ -179,7 +178,6 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
         Calendar cal = new java.util.GregorianCalendar();
         cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
         cal.set(Calendar.MINUTE, minute);
-        reminderDateChosenbyUser=DateFormat.getTimeFormat(this).format(cal.getTime());
         reminderDetails.append(" at " + DateFormat.getTimeFormat(this).format(cal.getTime()));
 
     }
@@ -204,10 +202,14 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
                 if (isDateValid(amountLent.getText().toString())) {
                     //Check if the reminder date is set after the lend date or not
                     //But do this only if reminder was picked
-                    if(reminderSwitch.isChecked()){
-                        checkDateOrder(lentdate.getText().toString(),reminderDateChosenbyUser);                    
-                    }    
-                    break;
+                    if (reminderSwitch.isChecked()) {
+                        checkDateOrder(lentdate.getText().toString(), reminderDateChosenbyUser);
+                        break;
+                    } else {
+                        //Write to database
+                        Toast.makeText(getApplicationContext(), "Now you need to write to database", Toast.LENGTH_SHORT).show();
+                    }
+
                 } else {
                     Toast.makeText(getApplicationContext(), R.string.dateFormatError, Toast.LENGTH_SHORT).show();
                     break;
@@ -233,7 +235,7 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
             return false;
         }
     }
-    
+
     //Method that checks if the reminder date is after the lent date or not
     public void checkDateOrder(String lentDate, String reminderDate) {
         //checks if the followup date is after the meetingDate or not
@@ -244,17 +246,17 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
 
             if (lent.after(reminder) || lent.equals(reminder)) {
                 //Throw a toast asking the user to recheck dates. Reminder date has to be later than lent date
-                Toast.makeText(getApplicationContext(),R.string.recheckDates,Toast.LENGTH_SHORT).show();
-            }else{
+                Toast.makeText(getApplicationContext(), R.string.recheckDates, Toast.LENGTH_SHORT).show();
+            } else {
                 //Method to write to database
                 //WRITE DATA TO DATABASE
                 Toast.makeText(getApplicationContext(), "Now you need to write to database", Toast.LENGTH_SHORT).show();
-            }            
+            }
         } catch (ParseException e) {
             e.printStackTrace();
         }
     }
-    
+
 }
 
 //TODO set switch to inflate date and time picker and set reminder

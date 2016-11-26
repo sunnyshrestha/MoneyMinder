@@ -1,15 +1,14 @@
 package moneyminder.suncha.com.moneyminder;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.internal.NavigationMenu;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.*;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.Toast;
-
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,11 +35,11 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        final myPagerAdapter adapter = new myPagerAdapter(getSupportFragmentManager(),tabLayout.getTabCount());
+        final myPagerAdapter adapter = new myPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener(){
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -72,12 +71,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemSelected(MenuItem menuItem) {
                 //TODO: Start some activity
-                switch (menuItem.getItemId()){
+                switch (menuItem.getItemId()) {
                     case R.id.action_receivable:
                         startReceivableDetailsActivity();
                         break;
                     case R.id.action_payable:
-                        Toast.makeText(getApplicationContext(),"Payables",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Payables", Toast.LENGTH_SHORT).show();
                         break;
                     default:
                         break;
@@ -89,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startReceivableDetailsActivity() {
-        Intent receivableIntent = new Intent(this,ReceivableDetails.class);
+        Intent receivableIntent = new Intent(this, ReceivableDetails.class);
         startActivity(receivableIntent);
     }
 }
