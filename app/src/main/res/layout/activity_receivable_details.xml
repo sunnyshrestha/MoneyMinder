@@ -152,7 +152,7 @@
                 android:layout_marginTop="@dimen/padding"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <Button
                     android:id="@+id/changeReminderButton"
@@ -169,10 +169,10 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
-                    android:layout_toStartOf="@+id/changeReminderButton"
+                    android:layout_toStartOf="@id/changeReminderButton"
+                    android:layout_toLeftOf="@id/changeReminderButton"
                     android:gravity="start|center_vertical"
                     android:paddingRight="@dimen/padding"
-                    android:text="This is a sample text"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
 

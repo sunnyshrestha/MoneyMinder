@@ -256,7 +256,4 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
             e.printStackTrace();
         }
     }
-
 }
-
-//TODO set switch to inflate date and time picker and set reminder
