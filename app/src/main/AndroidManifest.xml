@@ -3,6 +3,7 @@
     package="moneyminder.suncha.com.moneyminder">
 
     <application
+        android:name="com.orm.SugarApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -16,6 +17,20 @@
             </intent-filter>
         </activity>
         <activity android:name=".ReceivableDetails"></activity>
+
+        <!--<meta-data-->
+            <!--android:name="DATABASE"-->
+            <!--android:value="moneyminder.db" />-->
+        <!--<meta-data-->
+            <!--android:name="VERSION"-->
+            <!--android:value="1" />-->
+        <!--<meta-data-->
+            <!--android:name="QUERY_LOG"-->
+            <!--android:value="true" />-->
+        <!--<meta-data-->
+            <!--android:name="DOMAIN_PACKAGE_NAME"-->
+            <!--android:value="moneyminder.suncha.com.moneyminder" />-->
+
     </application>
 
 </manifest>

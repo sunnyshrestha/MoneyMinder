@@ -58,10 +58,13 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
     EditText nameOfLender;
     @BindView(R.id.amountLent)
     EditText amountLent;
+    @BindView(R.id.remarks)
+            EditText remarks;
 
 
     int datePickerID = 0; //If this is 1, then it refers to lend date picker and if it is 2, it refers to reminder date
     String reminderDateChosenbyUser; //The reminder date that the user chooses is assigned to this variable so that we can later check if the reminder date is later than the lent date or not
+    String reminderTimeChosenbyUser;//This is used to write the time to database
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,7 +181,8 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
         Calendar cal = new java.util.GregorianCalendar();
         cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
         cal.set(Calendar.MINUTE, minute);
-        reminderDetails.append(" at " + DateFormat.getTimeFormat(this).format(cal.getTime()));
+        reminderTimeChosenbyUser= DateFormat.getTimeFormat(this).format(cal.getTime());
+        reminderDetails.append(" at " + reminderTimeChosenbyUser);
 
     }
 
@@ -207,7 +211,9 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
                         break;
                     } else {
                         //Write to database
-                        Toast.makeText(getApplicationContext(), "Now you need to write to database", Toast.LENGTH_SHORT).show();
+                        writeToDatabase();
+                        Toast.makeText(getApplicationContext(), "Written to database", Toast.LENGTH_SHORT).show();
+                        finish();
                     }
 
                 } else {
@@ -248,12 +254,30 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
                 //Throw a toast asking the user to recheck dates. Reminder date has to be later than lent date
                 Toast.makeText(getApplicationContext(), R.string.recheckDates, Toast.LENGTH_SHORT).show();
             } else {
-                //Method to write to database
                 //WRITE DATA TO DATABASE
-                Toast.makeText(getApplicationContext(), "Now you need to write to database", Toast.LENGTH_SHORT).show();
+                writeToDatabase();
+                Toast.makeText(getApplicationContext(), "Written to database", Toast.LENGTH_SHORT).show();
+                finish();
             }
         } catch (ParseException e) {
             e.printStackTrace();
         }
     }
+
+    //Method to write to database
+    public void writeToDatabase(){
+        String isReminderActivated;
+        if(reminderSwitch.isChecked()){
+            isReminderActivated="1";
+        }else{
+            isReminderActivated="0";
+            reminderDateChosenbyUser="0";
+            reminderTimeChosenbyUser="0";
+        }
+
+        ReceivablesModel newReceivable = new ReceivablesModel(String.valueOf(nameOfLender.getText().toString()),String.valueOf(lentdate.getText().toString()),String.valueOf(amountLent.getText().toString()),isReminderActivated,reminderDateChosenbyUser,reminderTimeChosenbyUser,String.valueOf(remarks.getText().toString()));
+        newReceivable.save();
+    }
 }
+
+//Refer to http://satyan.github.io/sugar/getting-started.html
