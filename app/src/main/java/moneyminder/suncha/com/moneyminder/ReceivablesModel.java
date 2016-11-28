@@ -1,19 +1,28 @@
 package moneyminder.suncha.com.moneyminder;
 
 import com.orm.SugarRecord;
+import com.orm.dsl.Table;
 
 /**
  * Created by MSI on 11/27/2016.
  */
 
-public class ReceivablesModel extends SugarRecord {
-    String name;
-    String lentDate;
-    String lentAmount;
-    String isReminderActivated;
-    String reminderDate;
-    String reminderTime;
-    String remarks;
+@Table
+public class ReceivablesModel extends SugarRecord{
+    private Long id;
+
+
+    public ReceivablesModel() {
+
+    }
+
+    public String name;
+    public String lentDate;
+    public String lentAmount;
+    public String isReminderActivated;
+    public String reminderDate;
+    public String reminderTime;
+    public String remarks;
 
     //Default constructor
     public ReceivablesModel(String name, String lentDate, String lentAmount, String isReminderActivated, String reminderDate, String reminderTime, String remarks) {
@@ -26,9 +35,7 @@ public class ReceivablesModel extends SugarRecord {
         this.remarks = remarks;
     }
 
-    public ReceivablesModel() {
-
+    public Long getId(){
+        return id;
     }
-
-
 }

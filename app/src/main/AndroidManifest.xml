@@ -18,18 +18,19 @@
         </activity>
         <activity android:name=".ReceivableDetails"></activity>
 
-        <!--<meta-data-->
-            <!--android:name="DATABASE"-->
-            <!--android:value="moneyminder.db" />-->
-        <!--<meta-data-->
-            <!--android:name="VERSION"-->
-            <!--android:value="1" />-->
-        <!--<meta-data-->
-            <!--android:name="QUERY_LOG"-->
-            <!--android:value="true" />-->
-        <!--<meta-data-->
-            <!--android:name="DOMAIN_PACKAGE_NAME"-->
-            <!--android:value="moneyminder.suncha.com.moneyminder" />-->
+        <meta-data
+            android:name="QUERY_LOG"
+            android:value="true" />
+        <meta-data
+            android:name="DATABASE"
+            android:value="MoneyMinderData.db" />
+        <meta-data
+            android:name="VERSION"
+            android:value="1" />
+        <meta-data
+            android:name="DOMAIN_PACKAGE_NAME"
+            android:value="moneyminder.suncha.com.moneyminder" />
+
 
     </application>
 
