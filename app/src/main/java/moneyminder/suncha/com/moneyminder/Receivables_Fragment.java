@@ -18,7 +18,10 @@ import butterknife.ButterKnife;
 
 public class Receivables_Fragment extends android.support.v4.app.Fragment {
     @BindView(R.id.receivableRecyclerView)
-    RecyclerView receivableRecyclerView;
+    RecyclerView receivableRecyclerView;   
+    
+    ReceivablesAdapter receivablesAdapter;
+    List<ReceivablesModel> receivablesModel = new ArrayList<>();
     long initialCount;
 
     @Nullable
@@ -29,8 +32,15 @@ public class Receivables_Fragment extends android.support.v4.app.Fragment {
         StaggeredGridLayoutManager gridLayoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
         gridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
         receivableRecyclerView.setLayoutManager(gridLayoutManager);
+        
+        initialCount=ReceivablesModel.count(ReceivablesModel.class);
+        
+        if(initialCount>=0){
+            receivablesModel = ReceivablesModel.listAll(ReceivablesModel.class);
+            //Need to create adapter        
+        }
 
-        //Need to create adapter
+        
 
         return inflater.inflate(R.layout.receivables_layout,container,false);
 
