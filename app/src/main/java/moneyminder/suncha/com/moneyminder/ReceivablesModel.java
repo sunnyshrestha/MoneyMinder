@@ -7,7 +7,6 @@ import com.orm.dsl.Table;
  * Created by MSI on 11/27/2016.
  */
 
-@Table
 public class ReceivablesModel extends SugarRecord{
     private Long id;
 
@@ -34,8 +33,8 @@ public class ReceivablesModel extends SugarRecord{
         this.reminderTime = reminderTime;
         this.remarks = remarks;
     }
+    
+    //Now create getters and setters here
 
-    public Long getId(){
-        return id;
-    }
+
 }
