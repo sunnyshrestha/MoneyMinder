@@ -37,10 +37,13 @@ public class Receivables_Fragment extends android.support.v4.app.Fragment {
         
         if(initialCount>=0){
             receivablesModel = ReceivablesModel.listAll(ReceivablesModel.class);
-            //Need to create adapter        
-        }
-
-        
+            //Adapter
+            receivablesAdapter = new ReceivablesAdapter(getActivity(),receivablesModel);
+            receivableRecyclerView.setAdapter(receivablesAdapter);
+            
+            if(receivablesModel.isEmpty())
+                Toast.makeText(getActivity(),"Nothing added",Toast.LENGTH_SHORT).show();            
+        }        
 
         return inflater.inflate(R.layout.receivables_layout,container,false);
 
