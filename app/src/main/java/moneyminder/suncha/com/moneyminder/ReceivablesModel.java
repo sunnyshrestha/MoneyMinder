@@ -1,16 +1,12 @@
 package moneyminder.suncha.com.moneyminder;
 
 import com.orm.SugarRecord;
-import com.orm.dsl.Table;
 
 /**
  * Created by MSI on 11/27/2016.
  */
 
-public class ReceivablesModel extends SugarRecord{
-    private Long id;
-
-
+public class ReceivablesModel extends SugarRecord {
     public ReceivablesModel() {
 
     }
@@ -21,7 +17,7 @@ public class ReceivablesModel extends SugarRecord{
     public String isReminderActivated;
     public String reminderDate;
     public String reminderTime;
-    public String remarks;
+
 
     //Default constructor
     public ReceivablesModel(String name, String lentDate, String lentAmount, String isReminderActivated, String reminderDate, String reminderTime, String remarks) {
@@ -33,8 +29,63 @@ public class ReceivablesModel extends SugarRecord{
         this.reminderTime = reminderTime;
         this.remarks = remarks;
     }
-    
-    //Now create getters and setters here
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLentDate() {
+        return lentDate;
+    }
+
+    public void setLentDate(String lentDate) {
+        this.lentDate = lentDate;
+    }
+
+    public String getLentAmount() {
+        return lentAmount;
+    }
+
+    public void setLentAmount(String lentAmount) {
+        this.lentAmount = lentAmount;
+    }
+
+    public String getIsReminderActivated() {
+        return isReminderActivated;
+    }
+
+    public void setIsReminderActivated(String isReminderActivated) {
+        this.isReminderActivated = isReminderActivated;
+    }
+
+    public String getReminderDate() {
+        return reminderDate;
+    }
+
+    public void setReminderDate(String reminderDate) {
+        this.reminderDate = reminderDate;
+    }
+
+    public String getReminderTime() {
+        return reminderTime;
+    }
+
+    public void setReminderTime(String reminderTime) {
+        this.reminderTime = reminderTime;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
+    public String remarks;
 
 }
