@@ -33,7 +33,7 @@
     <string name="OK">OK</string>
     <string name="Cancel">CANCEL</string>
     <string name="change">Change</string>
-    
+
     //Error message
     <string name="saveError">Name, amount and date must be filled</string>
     <string name="dateFormatError">Date should be in MM/dd/yyyy format</string>

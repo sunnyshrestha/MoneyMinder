@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_start_application"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="moneyminder.suncha.com.moneyminder.StartApplication">
+
+    <Button
+        android:id="@+id/newReceivableEntry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Make a new receivable entry" />
+
+    <Button
+        android:id="@+id/viewReceivableDatabase"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/newReceivableEntry"
+        android:text="View all receivables"/>
+
+</RelativeLayout>
