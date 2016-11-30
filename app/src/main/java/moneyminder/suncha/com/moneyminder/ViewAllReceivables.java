@@ -1,6 +1,8 @@
 package moneyminder.suncha.com.moneyminder;
 
+import android.graphics.drawable.Drawable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,6 +32,8 @@ public class ViewAllReceivables extends AppCompatActivity {
         Log.d("main","onCreate");
 
         recyclerView = (RecyclerView)findViewById(R.id.viewallreceivables);
+        recyclerView.addItemDecoration(new SimpleDividerItemDecoration(this));
+
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false);
 //        StaggeredGridLayoutManager gridLayoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);

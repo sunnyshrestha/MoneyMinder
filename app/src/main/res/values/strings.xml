@@ -17,7 +17,7 @@
     //Text Fields
     <string name="whoDidYouLendItTo">Who did you lend the money to?</string>
     <string name="totalAmountLent">Total amount you lent</string>
-    <string name="date">Lent date (MM/dd/YYYY)</string>
+    <string name="date">Lent date (YYYY-MM-DD)</string>
     <string name="notes">Remarks (optional)</string>
     <string name="notes_long">You can enter a description to help you remember better</string>
 
@@ -39,6 +39,7 @@
     <string name="dateFormatError">Date should be in MM/dd/yyyy format</string>
     <string name="recheckDates">Reminder date has to be later than lent date</string>
     <string name="reminderText">Reminder set for</string>
+    <string name="reminderHint">Set a reminder</string>
 
 
 </resources>

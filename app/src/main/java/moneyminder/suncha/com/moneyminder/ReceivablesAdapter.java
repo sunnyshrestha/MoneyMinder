@@ -9,9 +9,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-/**
- * Created by MSI on 11/28/2016.
- */
 
 public class ReceivablesAdapter extends RecyclerView.Adapter<ReceivablesAdapter.ReceivablesModelVH> {
     Context context;
@@ -50,7 +47,7 @@ public class ReceivablesAdapter extends RecyclerView.Adapter<ReceivablesAdapter.
             super(itemView);
             nameOfMoneyTaker = (TextView) itemView.findViewById(R.id.NameOfMoneyTaker);
             amountOfMoneyThatTakerHasTaken = (TextView) itemView.findViewById(R.id.amountOfMoneyThatTakerHasTaken);
-            dateWhenTheMoneyWasLent = (TextView) itenView.findViewById(R.id.showLentDate);
+            dateWhenTheMoneyWasLent = (TextView) itemView.findViewById(R.id.showLentDate);
             itemView.setOnClickListener(this);
         }
 

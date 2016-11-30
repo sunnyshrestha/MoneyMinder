@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 
+repositories{
+    maven { url "https://jitpack.io" }
+}
+
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.3"
@@ -17,7 +21,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
 }
+
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -31,8 +37,8 @@ dependencies {
     compile 'io.github.yavski:fab-speed-dial:1.0.6'
     compile 'com.github.florent37:materialtextfield:1.0.5'
     compile 'com.android.support:support-v4:24.2.1'
-//    compile 'com.philliphsu:bottomsheetpickers:2.0.2'
     compile 'com.github.satyan:sugar:1.5'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+    compile 'com.github.BlacKCaT27:CurrencyEditText:v1.4.4'
 }

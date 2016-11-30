@@ -40,7 +40,7 @@
                 android:id="@+id/nameOfLenderWrapper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textCapWords"                                                                      
+                android:inputType="textCapWords"
                 app:mtf_animationDuration="150"
                 app:mtf_cardCollapsedHeight="1dp"
                 app:mtf_image="@drawable/ic_action_face_unlock"
@@ -69,13 +69,13 @@
                 app:mtf_labelColor="@color/white"
                 app:mtf_openKeyboardOnFocus="true">
 
-                <EditText
+                <com.blackcat.currencyedittext.CurrencyEditText
                     android:id="@+id/amountLent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="@string/totalAmountLent"
-                    android:inputType="number"
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    app:enable_default_hint="false"/>
             </com.github.florent37.materialtextfield.MaterialTextField>
 
             <RelativeLayout
@@ -166,15 +166,16 @@
                     android:id="@+id/reminderDetails"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/changeReminderButton"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_toStartOf="@id/changeReminderButton"
-                    android:layout_toLeftOf="@id/changeReminderButton"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/changeReminderButton"
+                    android:layout_toStartOf="@+id/changeReminderButton"
                     android:gravity="start|center_vertical"
+                    android:hint="@string/reminderHint"
                     android:paddingRight="@dimen/padding"
                     android:textColor="@color/white"
+                    android:textColorHint="@color/white"
                     android:textSize="14sp" />
 
             </RelativeLayout>
