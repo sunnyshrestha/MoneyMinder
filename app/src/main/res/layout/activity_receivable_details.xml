@@ -40,6 +40,7 @@
                 android:id="@+id/nameOfLenderWrapper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="textCapWords"                                                                      
                 app:mtf_animationDuration="150"
                 app:mtf_cardCollapsedHeight="1dp"
                 app:mtf_image="@drawable/ic_action_face_unlock"
