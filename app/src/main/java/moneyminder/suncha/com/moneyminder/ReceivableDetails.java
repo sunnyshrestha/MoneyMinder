@@ -100,8 +100,16 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
     @OnCheckedChanged(R.id.reminderSwitch)
     public void reminderDate() {
         if (reminderSwitch.isChecked()) {
-            Calendar now = Calendar.getInstance();
-/*            BottomSheetDatePickerDialog dialog = BottomSheetDatePickerDialog.newInstance(
+            datePickerID=2;
+            //Now call datepicker
+            datePicker selectDateFragment = new datePicker();
+            selectDateFragment.show(fragmentManager, "REMINDER DATE");
+            //Now call time picker
+            reminderDetailsWrapper.setVisibility(View.VISIBLE);
+            
+            
+/*            Calendar now = Calendar.getInstance();
+              BottomSheetDatePickerDialog dialog = BottomSheetDatePickerDialog.newInstance(
                     ReceivableDetails.this,
                     now.get(Calendar.YEAR),
                     now.get(Calendar.MONTH),
@@ -136,6 +144,7 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
 
         datePickerID = 1;
         dialog.show(getSupportFragmentManager(), "lentdate");*/
+        datePickerID=1;
         datePicker selectDateFragment = new datePicker();
         selectDateFragment.show(fragmentManager, "LENT DATE");
     }
@@ -232,7 +241,6 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
         return true;
     }
 
-
     //Method to check if date is valid
     public boolean isDateValid(String date) {
         try {
@@ -287,7 +295,17 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         //// TODO: 11/30/2016 datepicker should check whether the call was from lent date or reminder date and update views accordingly 
-
+        switch(datePickerID){
+            case 1:
+                lentdate.setText(year+"-"+month+1+"-"+dayOfMonth);
+                break;
+            case 2:
+                reminderTime();
+                reminderDetailsWrapper.setVisibility(View.VISIBLE);
+                reminderDateChosenbyUser = DateFormat.getDateFormat(this).format(cal.getTime());
+                reminderDetails.setText(getResources().getString(R.string.reminderText) + " " + DateFormat.getDateFormat(this).format(cal.getTime()));
+                break;            
+        }      
     }
 }
 
