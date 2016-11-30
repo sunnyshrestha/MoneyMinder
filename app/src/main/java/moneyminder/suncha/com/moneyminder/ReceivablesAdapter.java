@@ -35,6 +35,7 @@ public class ReceivablesAdapter extends RecyclerView.Adapter<ReceivablesAdapter.
     public void onBindViewHolder(ReceivablesModelVH holder, int position) {
         holder.nameOfMoneyTaker.setText(receivablesModel.get(position).getName());
         holder.amountOfMoneyThatTakerHasTaken.setText(receivablesModel.get(position).getLentAmount());
+        holder.dateWhenTheMoneyWasLent.setText(receivablesModel.get(position).getLentDate());
     }
 
     @Override
@@ -43,12 +44,13 @@ public class ReceivablesAdapter extends RecyclerView.Adapter<ReceivablesAdapter.
     }
 
     class ReceivablesModelVH extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView nameOfMoneyTaker, amountOfMoneyThatTakerHasTaken;
+        TextView nameOfMoneyTaker, amountOfMoneyThatTakerHasTaken,dateWhenTheMoneyWasLent;
 
         public ReceivablesModelVH(View itemView) {
             super(itemView);
             nameOfMoneyTaker = (TextView) itemView.findViewById(R.id.NameOfMoneyTaker);
             amountOfMoneyThatTakerHasTaken = (TextView) itemView.findViewById(R.id.amountOfMoneyThatTakerHasTaken);
+            dateWhenTheMoneyWasLent = (TextView) itenView.findViewById(R.id.showLentDate);
             itemView.setOnClickListener(this);
         }
 
