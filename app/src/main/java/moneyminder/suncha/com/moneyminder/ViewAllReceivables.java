@@ -61,6 +61,42 @@ public class ViewAllReceivables extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
         modifyPos=savedInstanceState.getInt("modify");
     }
+    
+    // Handling swipe to delete
+        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+            @Override
+            
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                //Remove swiped item from list and notify the RecyclerView
+
+                final int position = viewHolder.getAdapterPosition();
+                final ReceivableModel receivable = receivables.get(viewHolder.getAdapterPosition());
+                receivables.remove(viewHolder.getAdapterPosition());
+                adapter.notifyItemRemoved(position);
+
+                receivable.delete();
+                initialCount -= 1;
+
+                Snackbar.make(recyclerView, getResources().getString(R.string.itemDeleted), Snackbar.LENGTH_SHORT)
+                        .setAction(getResources().getString(R.string.undo), new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                note.save();
+                                receivables.add(position, receivable);
+                                adapter.notifyItemInserted(position);
+                                initialCount += 1;
+                            }
+                        })
+                        .show();
+            }
+
+        };
+            
+        }
 
     @Override
     protected void onResume() {
