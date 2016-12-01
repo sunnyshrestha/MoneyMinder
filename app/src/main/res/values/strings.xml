@@ -20,6 +20,9 @@
     <string name="date">Lent date (YYYY-MM-DD)</string>
     <string name="notes">Remarks (optional)</string>
     <string name="notes_long">You can enter a description to help you remember better</string>
+    <string name="amount">Amount  </string>
+    <string name="lentDate"> Lent on  </string>
+    <string name="remarks">Remarks</string>
 
     <string name="discardChanges">Discard changes?</string>
     <string name="nothingWillBeSaved">Discard any changes made and go back?</string>
@@ -40,6 +43,7 @@
     <string name="recheckDates">Reminder date has to be later than lent date</string>
     <string name="reminderText">Reminder set for</string>
     <string name="reminderHint">Set a reminder</string>
+    <string name="noRemarksSet">No remarks</string>
 
 
 </resources>

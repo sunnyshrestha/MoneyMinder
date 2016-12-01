@@ -286,15 +286,20 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
     //Method to write to database
     public void writeToDatabase() {
         String isReminderActivated;
-        if (reminderSwitch.isChecked()) {
+        if (reminderSwitch.isChecked()&&reminderDetails.getText().toString().trim().length()>0) {
             isReminderActivated = "1";
         } else {
             isReminderActivated = "0";
             reminderDateChosenbyUser = "0";
             reminderTimeChosenbyUser = "0";
         }
+        String optionalRemarks;
+        if(remarks.getText().toString().trim().length()==0){
+            optionalRemarks = getResources().getString(R.string.noRemarksSet);
+        }else
+        optionalRemarks=String.valueOf(remarks.getText());
 
-        ReceivablesModel newReceivable = new ReceivablesModel(String.valueOf(nameOfLender.getText().toString()), String.valueOf(lentdate.getText().toString()), String.valueOf(amountLent.getText().toString()), isReminderActivated, reminderDateChosenbyUser, reminderTimeChosenbyUser, String.valueOf(remarks.getText().toString()));
+        ReceivablesModel newReceivable = new ReceivablesModel(String.valueOf(nameOfLender.getText().toString()), String.valueOf(lentdate.getText().toString()), String.valueOf(amountLent.getText().toString()), isReminderActivated, reminderDateChosenbyUser, reminderTimeChosenbyUser,optionalRemarks);
         newReceivable.save();
     }
 

@@ -40,7 +40,6 @@
                 android:id="@+id/nameOfLenderWrapper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textCapWords"
                 app:mtf_animationDuration="150"
                 app:mtf_cardCollapsedHeight="1dp"
                 app:mtf_image="@drawable/ic_action_face_unlock"
@@ -52,7 +51,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/whoDidYouLendItTo"
-                    android:inputType="textPersonName"
+                    android:inputType="textPersonName|textCapWords"
                     android:maxLines="1" />
 
             </com.github.florent37.materialtextfield.MaterialTextField>
@@ -65,7 +64,7 @@
                 android:layout_marginTop="@dimen/padding"
                 app:mtf_animationDuration="150"
                 app:mtf_cardCollapsedHeight="1dp"
-                app:mtf_image="@drawable/ic_action_editor_attach_money"
+                app:mtf_image="@drawable/ic_23_512"
                 app:mtf_labelColor="@color/white"
                 app:mtf_openKeyboardOnFocus="true">
 
@@ -201,7 +200,7 @@
                 android:layout_marginTop="@dimen/padding"
                 android:background="@drawable/rounded_corner"
                 android:hint="@string/notes_long"
-                android:inputType="textMultiLine"
+                android:inputType="textMultiLine|textCapSentences"
                 android:minLines="3"
                 android:paddingLeft="@dimen/padding"
                 android:paddingRight="@dimen/padding"
