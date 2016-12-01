@@ -25,6 +25,8 @@
     <string name="remarks">Remarks</string>
 
     <string name="discardChanges">Discard changes?</string>
+    <string name="itemDeleted">Item deleted</string>
+    <string name="undo">Undo</string>
     <string name="nothingWillBeSaved">Discard any changes made and go back?</string>
 
     //Buttons
