@@ -305,7 +305,6 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        //// TODO: 11/30/2016 datepicker should check whether the call was from lent date or reminder date and update views accordingly
         int monthActual = month + 1;
 
         StringBuilder tempDate = new StringBuilder();

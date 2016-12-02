@@ -17,6 +17,7 @@ public class ReceivablesModel extends SugarRecord {
     public String isReminderActivated;
     public String reminderDate;
     public String reminderTime;
+    public String remarks;
 
 
     //Default constructor
@@ -86,6 +87,6 @@ public class ReceivablesModel extends SugarRecord {
         this.remarks = remarks;
     }
 
-    public String remarks;
+
 
 }

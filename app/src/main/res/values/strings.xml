@@ -38,6 +38,8 @@
     <string name="OK">OK</string>
     <string name="Cancel">CANCEL</string>
     <string name="change">Change</string>
+    <string name="reminderSetat">Set for </string>
+    <string name="at"> at </string>
 
     //Error message
     <string name="saveError">Name, amount and date must be filled</string>
@@ -46,6 +48,7 @@
     <string name="reminderText">Reminder set for</string>
     <string name="reminderHint">Set a reminder</string>
     <string name="noRemarksSet">No remarks</string>
+    <string name="noReminder">No reminder set</string>
 
 
 </resources>
