@@ -1,8 +1,9 @@
 package moneyminder.suncha.com.moneyminder;
 
-import android.content.Intent;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -24,6 +25,7 @@ public class popupReceivable extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.popup_window_receivables);
         ButterKnife.bind(this);
@@ -33,7 +35,7 @@ public class popupReceivable extends AppCompatActivity {
     }
 
     private void loadViews() {
-        //Intent intent = getIntent();
+
         name=getIntent().getStringExtra("name");
         amount=getIntent().getStringExtra("amount");
         lentDate=getIntent().getStringExtra("date");
@@ -44,11 +46,14 @@ public class popupReceivable extends AppCompatActivity {
 
         nameTV.setText(name);
         amountTV.setText(amount);
-        lentDateTV.setText(amount);
+        lentDateTV.setText(lentDate);
         if(isReminderActivated=="1"){
             reminderInfoTV.setText(getResources().getString(R.string.reminderSetat)+reminderDate+getResources().getString(R.string.at)+reminderTime);
         }else
             reminderInfoTV.setText(getResources().getString(R.string.noReminder));
         remarksET.setText(remarks);
+
     }
+
+
 }

@@ -37,10 +37,6 @@ import butterknife.OnClick;
 import static android.view.View.GONE;
 import static moneyminder.suncha.com.moneyminder.R.id.lentDate;
 
-/*import com.philliphsu.bottomsheetpickers.date.BottomSheetDatePickerDialog;
-import com.philliphsu.bottomsheetpickers.date.DatePickerDialog;
-import com.philliphsu.bottomsheetpickers.time.BottomSheetTimePickerDialog;
-import com.philliphsu.bottomsheetpickers.time.grid.GridTimePickerDialog;*/
 
 public class ReceivableDetails extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener { //DatePickerDialog.OnDateSetListener, BottomSheetTimePickerDialog.OnTimeSetListener {
     @BindView(R.id.receivableToolbar)
@@ -112,16 +108,7 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
             selectDateFragment.show(fragmentManager, "REMINDER DATE");
             //Now call time picker
             reminderDetailsWrapper.setVisibility(View.VISIBLE);
-            
-            
-/*            Calendar now = Calendar.getInstance();
-              BottomSheetDatePickerDialog dialog = BottomSheetDatePickerDialog.newInstance(
-                    ReceivableDetails.this,
-                    now.get(Calendar.YEAR),
-                    now.get(Calendar.MONTH),
-                    now.get(Calendar.DAY_OF_MONTH));
-            datePickerID = 2;
-            dialog.show(getSupportFragmentManager(), "reminderDate");*/
+
         } else {
             reminderDetails.setText(null);
             reminderDetailsWrapper.setVisibility(GONE);
@@ -129,27 +116,18 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
     }
 
     //Call reminder time after reminder date is set
-    public void reminderTime() {
+/*    public void reminderTime() {
         Calendar nowTime = Calendar.getInstance();
-/*        GridTimePickerDialog timeDialog = GridTimePickerDialog.newInstance(
+*//*        GridTimePickerDialog timeDialog = GridTimePickerDialog.newInstance(
                 ReceivableDetails.this,
                 nowTime.get(Calendar.HOUR_OF_DAY),
                 nowTime.get(Calendar.MINUTE),
                 DateFormat.is24HourFormat(ReceivableDetails.this));
-        timeDialog.show(getSupportFragmentManager(), "reminderTime");*/
-    }
+        timeDialog.show(getSupportFragmentManager(), "reminderTime");*//*
+    }*/
 
     @OnClick(R.id.lentDateButton)
     public void pickDate() {
-/*        Calendar now = Calendar.getInstance();
-*//*        BottomSheetDatePickerDialog dialog = BottomSheetDatePickerDialog.newInstance(
-                ReceivableDetails.this,
-                now.get(Calendar.YEAR),
-                now.get(Calendar.MONTH),
-                now.get(Calendar.DAY_OF_MONTH));*//*
-
-        datePickerID = 1;
-        dialog.show(getSupportFragmentManager(), "lentdate");*/
         datePickerID = 1;
         datePicker selectDateFragment = new datePicker();
         selectDateFragment.show(fragmentManager, "LENT DATE");
@@ -174,37 +152,6 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
         return super.onKeyDown(keyCode, event);
     }
 
-    //User decides to change the reminder that s/he had set previously
-/*    @Override
-    public void onDateSet(DatePickerDialog dialog, int year, int monthOfYear, int dayOfMonth) {
-        Calendar cal = new java.util.GregorianCalendar();
-        cal.set(Calendar.YEAR, year);
-        cal.set(Calendar.MONTH, monthOfYear);
-        cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-        switch (datePickerID) {
-            case 1:
-                lentdate.setText(DateFormat.getDateFormat(this).format(cal.getTime()));
-                break;
-            case 2:
-                reminderTime();
-                reminderDetailsWrapper.setVisibility(View.VISIBLE);
-                reminderDateChosenbyUser = DateFormat.getDateFormat(this).format(cal.getTime());
-                reminderDetails.setText(getResources().getString(R.string.reminderText) + " " + DateFormat.getDateFormat(this).format(cal.getTime()));
-                break;
-            default:
-                break;
-        }
-    }*/
-
-/*    @Override
-    public void onTimeSet(ViewGroup viewGroup, int hourOfDay, int minute) {
-        Calendar cal = new java.util.GregorianCalendar();
-        cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
-        cal.set(Calendar.MINUTE, minute);
-        reminderTimeChosenbyUser= DateFormat.getTimeFormat(this).format(cal.getTime());
-        reminderDetails.append(" at " + reminderTimeChosenbyUser);
-
-    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -326,9 +273,8 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
                 lentdate.setText(dateLent);
                 break;
             case 2:
-                reminderTime();
+//                reminderTime();
                 reminderDetailsWrapper.setVisibility(View.VISIBLE);
-
                 reminderDateChosenbyUser = tempDate.toString();
                 reminderDetails.setText(getResources().getText(R.string.reminderText) + " " + reminderDateChosenbyUser);
                 TimePickerFragment pickTime = new TimePickerFragment();
@@ -358,10 +304,13 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
         tempReminderTime.append(" ");
         tempReminderTime.append(amOrpm);
         String actualReminderTime = tempReminderTime.toString();
+        reminderTimeChosenbyUser = actualReminderTime;
 
         reminderDetails.append(" at " + actualReminderTime);
 
     }
+
+    //TODO Check if reminders are being written well in the database. I just set reminderTImeChosenbyUser = actualReminderTime. See what effect does it have.
 }
 
 //Refer to http://satyan.github.io/sugar/getting-started.html
