@@ -1,8 +1,9 @@
 package moneyminder.suncha.com.moneyminder;
 
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.text.method.KeyListener;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -14,7 +15,7 @@ public class popupReceivable extends AppCompatActivity {
     String name, amount, lentDate, reminderDate, reminderTime, remarks;
     int isReminderActivated;
     @BindView(R.id.name)
-    TextView nameTV;
+    EditText nameTV;
     @BindView(R.id.amountValue)
     EditText amountTV;
     @BindView(R.id.dateLent)
@@ -24,6 +25,12 @@ public class popupReceivable extends AppCompatActivity {
     @BindView(R.id.remarksDetails)
     EditText remarksET;
 
+    KeyListener nameKeylistener;
+    KeyListener amountKeyListener;
+    KeyListener lentDateKeyListener;
+    KeyListener remarksDateKeyListener;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -31,19 +38,42 @@ public class popupReceivable extends AppCompatActivity {
         setContentView(R.layout.popup_window_receivables);
         ButterKnife.bind(this);
 
+        nameKeylistener = nameTV.getKeyListener();
+        amountKeyListener = amountTV.getKeyListener();
+        lentDateKeyListener = lentDateTV.getKeyListener();
+        remarksDateKeyListener = remarksET.getKeyListener();
+
+        //lock all the edittexts
+        disableEditTexts();
+
         //get data from previous intent and load the views
         loadViews();
     }
 
+    private void disableEditTexts() {
+        nameTV.setKeyListener(null);
+        amountTV.setKeyListener(null);
+        lentDateTV.setKeyListener(null);
+        remarksET.setKeyListener(null);
+
+    }
+
+    private void enableEditTexts() {
+        nameTV.setKeyListener(nameKeylistener);
+        amountTV.setKeyListener(amountKeyListener);
+        lentDateTV.setKeyListener(lentDateKeyListener);
+        remarksET.setKeyListener(remarksDateKeyListener);
+    }
+
     private void loadViews() {
 
-        name=getIntent().getStringExtra("name");
-        amount=getIntent().getStringExtra("amount");
-        lentDate=getIntent().getStringExtra("date");
+        name = getIntent().getStringExtra("name");
+        amount = getIntent().getStringExtra("amount");
+        lentDate = getIntent().getStringExtra("date");
         isReminderActivated = getIntent().getIntExtra("reminderCheck", -1);
-        reminderDate=getIntent().getStringExtra("reminderDate");
-        reminderTime=getIntent().getStringExtra("reminderTime");
-        remarks=getIntent().getStringExtra("remarks");
+        reminderDate = getIntent().getStringExtra("reminderDate");
+        reminderTime = getIntent().getStringExtra("reminderTime");
+        remarks = getIntent().getStringExtra("remarks");
 
         nameTV.setText(name);
         amountTV.setText(amount);

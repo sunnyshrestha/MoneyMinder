@@ -2,19 +2,38 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="@dimen/padding"
-    android:layout_marginLeft="@dimen/padding"
-    android:layout_marginRight="@dimen/padding"
-    android:layout_marginTop="@dimen/padding"
+    android:layout_marginBottom="@dimen/activity_vertical_margin"
+    android:layout_marginLeft="@dimen/activity_vertical_margin"
+    android:layout_marginRight="@dimen/activity_vertical_margin"
+    android:layout_marginTop="@dimen/activity_vertical_margin"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/name"
-        style="@style/Base.TextAppearance.AppCompat.Title"
+    <RelativeLayout
+        android:id="@+id/nameWrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sunny Shrestha"
-        android:textColor="@color/colorPrimary" />
+        android:gravity="center_vertical">
+
+        <EditText
+            android:id="@+id/name"
+            style="@style/Base.TextAppearance.AppCompat.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/editButton"
+            android:layout_toStartOf="@+id/editButton"
+            android:text="Sunny Shrestha"
+            android:textColor="@color/colorPrimary" />
+
+        <ImageView
+            android:id="@+id/editButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/edit_button_selector" />
+
+    </RelativeLayout>
 
 
     <RelativeLayout
@@ -23,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/name"
+        android:layout_below="@+id/nameWrapper"
         android:layout_marginTop="@dimen/padding"
         android:alpha=".8"
         android:gravity="center_vertical">
