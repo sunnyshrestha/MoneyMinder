@@ -7,21 +7,21 @@ import com.orm.SugarRecord;
  */
 
 public class ReceivablesModel extends SugarRecord {
-    public ReceivablesModel() {
-
-    }
-
     public String name;
     public String lentDate;
     public String lentAmount;
-    public String isReminderActivated;
+    public int isReminderActivated;
     public String reminderDate;
     public String reminderTime;
     public String remarks;
 
+    public ReceivablesModel() {
+
+    }
+
 
     //Default constructor
-    public ReceivablesModel(String name, String lentDate, String lentAmount, String isReminderActivated, String reminderDate, String reminderTime, String remarks) {
+    public ReceivablesModel(String name, String lentDate, String lentAmount, int isReminderActivated, String reminderDate, String reminderTime, String remarks) {
         this.name = name;
         this.lentDate = lentDate;
         this.lentAmount = lentAmount;
@@ -55,11 +55,11 @@ public class ReceivablesModel extends SugarRecord {
         this.lentAmount = lentAmount;
     }
 
-    public String getIsReminderActivated() {
+    public int getIsReminderActivated() {
         return isReminderActivated;
     }
 
-    public void setIsReminderActivated(String isReminderActivated) {
+    public void setIsReminderActivated(int isReminderActivated) {
         this.isReminderActivated = isReminderActivated;
     }
 

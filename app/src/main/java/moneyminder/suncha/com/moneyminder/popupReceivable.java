@@ -11,7 +11,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class popupReceivable extends AppCompatActivity {
-    String name,amount,lentDate,isReminderActivated,reminderDate,reminderTime,remarks;
+    String name, amount, lentDate, reminderDate, reminderTime, remarks;
+    int isReminderActivated;
     @BindView(R.id.name)
     TextView nameTV;
     @BindView(R.id.amountValue)
@@ -39,7 +40,7 @@ public class popupReceivable extends AppCompatActivity {
         name=getIntent().getStringExtra("name");
         amount=getIntent().getStringExtra("amount");
         lentDate=getIntent().getStringExtra("date");
-        isReminderActivated=getIntent().getStringExtra("reminderCheck");
+        isReminderActivated = getIntent().getIntExtra("reminderCheck", -1);
         reminderDate=getIntent().getStringExtra("reminderDate");
         reminderTime=getIntent().getStringExtra("reminderTime");
         remarks=getIntent().getStringExtra("remarks");
@@ -47,10 +48,13 @@ public class popupReceivable extends AppCompatActivity {
         nameTV.setText(name);
         amountTV.setText(amount);
         lentDateTV.setText(lentDate);
-        if(isReminderActivated=="1"){
-            reminderInfoTV.setText(getResources().getString(R.string.reminderSetat)+reminderDate+getResources().getString(R.string.at)+reminderTime);
-        }else
+        if (isReminderActivated == 1) {
+            reminderInfoTV.setText(getResources().getString(R.string.reminderSetat) + " " + reminderDate + " " + getResources().getString(R.string.at) + " " + reminderTime);
+        } else if (isReminderActivated == 0) {
             reminderInfoTV.setText(getResources().getString(R.string.noReminder));
+        } else {
+            reminderInfoTV.setText("Error is happens");
+        }
         remarksET.setText(remarks);
 
     }

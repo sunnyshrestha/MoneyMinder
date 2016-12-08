@@ -26,7 +26,6 @@ import com.blackcat.currencyedittext.CurrencyEditText;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 import butterknife.BindView;
@@ -64,8 +63,8 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
 
 
     int datePickerID = 0; //If this is 1, then it refers to lend date picker and if it is 2, it refers to reminder date
-    String reminderDateChosenbyUser; //The reminder date that the user chooses is assigned to this variable so that we can later check if the reminder date is later than the lent date or not
-    String reminderTimeChosenbyUser;//This is used to write the time to database
+    String reminderDateChosenbyUser = null; //The reminder date that the user chooses is assigned to this variable so that we can later check if the reminder date is later than the lent date or not
+    String reminderTimeChosenbyUser = null;//This is used to write the time to database
 
     FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -171,11 +170,13 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
                 }
                 //Step 2: Check if lent date is in proper format
                 if (isDateValid(amountLent.getText().toString())) {
-                    //Check if the reminder date is set after the lend date or not
+                    //Check if the reminder date is set after the lent date or not
                     //But do this only if reminder was picked
-                    if (reminderSwitch.isChecked()) {
+                    if (reminderSwitch.isChecked() && reminderDateChosenbyUser != null && reminderTimeChosenbyUser != null) {
                         checkDateOrder(lentdate.getText().toString(), reminderDateChosenbyUser);
                         break;
+                    } else if (reminderSwitch.isChecked() && (reminderTimeChosenbyUser == null || reminderDateChosenbyUser == null)) {
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.reminderNotProper), Toast.LENGTH_SHORT).show();
                     } else {
                         //Write to database
                         writeToDatabase();
@@ -206,48 +207,6 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
             e.printStackTrace();
             return false;
         }
-    }
-
-    //Method that checks if the reminder date is after the lent date or not
-    public void checkDateOrder(String lentDate, String reminderDate) {
-        //checks if the followup date is after the meetingDate or not
-        try {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            Date lent = simpleDateFormat.parse(lentDate);
-            Date reminder = simpleDateFormat.parse(reminderDate);
-
-            if (lent.after(reminder) || lent.equals(reminder)) {
-                //Throw a toast asking the user to recheck dates. Reminder date has to be later than lent date
-                Toast.makeText(getApplicationContext(), R.string.recheckDates, Toast.LENGTH_SHORT).show();
-            } else {
-                //WRITE DATA TO DATABASE
-                writeToDatabase();
-                Toast.makeText(getApplicationContext(), "Written to database", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-    }
-
-    //Method to write to database
-    public void writeToDatabase() {
-        String isReminderActivated;
-        if (reminderSwitch.isChecked()&&reminderDetails.getText().toString().trim().length()>0) {
-            isReminderActivated = "1";
-        } else {
-            isReminderActivated = "0";
-            reminderDateChosenbyUser = "0";
-            reminderTimeChosenbyUser = "0";
-        }
-        String optionalRemarks;
-        if(remarks.getText().toString().trim().length()==0){
-            optionalRemarks = getResources().getString(R.string.noRemarksSet);
-        }else
-        optionalRemarks=String.valueOf(remarks.getText());
-
-        ReceivablesModel newReceivable = new ReceivablesModel(String.valueOf(nameOfLender.getText().toString()), String.valueOf(lentdate.getText().toString()), String.valueOf(amountLent.getText().toString()), isReminderActivated, reminderDateChosenbyUser, reminderTimeChosenbyUser,optionalRemarks);
-        newReceivable.save();
     }
 
     @Override
@@ -308,6 +267,48 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
 
         reminderDetails.append(" at " + actualReminderTime);
 
+    }
+
+    //Method that checks if the reminder date is after the lent date or not
+    public void checkDateOrder(String lentDate, String reminderDate) {
+        //checks if the followup date is after the meetingDate or not
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date lent = simpleDateFormat.parse(lentDate);
+            Date reminder = simpleDateFormat.parse(reminderDate);
+
+            if (lent.after(reminder) || lent.equals(reminder)) {
+                //Throw a toast asking the user to recheck dates. Reminder date has to be later than lent date
+                Toast.makeText(getApplicationContext(), R.string.recheckDates, Toast.LENGTH_SHORT).show();
+            } else {
+                //WRITE DATA TO DATABASE
+                writeToDatabase();
+                Toast.makeText(getApplicationContext(), "Written to database", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //Method to write to database
+    public void writeToDatabase() {
+        int isReminderActivated;
+        if (reminderSwitch.isChecked() && reminderDateChosenbyUser != null && reminderTimeChosenbyUser != null) {
+            isReminderActivated = 1;
+        } else {
+            isReminderActivated = 0;
+            reminderDateChosenbyUser = "0";
+            reminderTimeChosenbyUser = "0";
+        }
+        String optionalRemarks;
+        if (remarks.getText().toString().trim().length() == 0) {
+            optionalRemarks = getResources().getString(R.string.noRemarksSet);
+        } else
+            optionalRemarks = String.valueOf(remarks.getText());
+
+        ReceivablesModel newReceivable = new ReceivablesModel(String.valueOf(nameOfLender.getText().toString()), String.valueOf(lentdate.getText().toString()), String.valueOf(amountLent.getText().toString()), isReminderActivated, reminderDateChosenbyUser.toString(), reminderTimeChosenbyUser.toString(), optionalRemarks);
+        newReceivable.save();
     }
 
     //TODO Check if reminders are being written well in the database. I just set reminderTImeChosenbyUser = actualReminderTime. See what effect does it have.

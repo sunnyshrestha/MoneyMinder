@@ -49,6 +49,7 @@
     <string name="reminderHint">Set a reminder</string>
     <string name="noRemarksSet">No remarks</string>
     <string name="noReminder">No reminder set</string>
+    <string name="reminderNotProper">Reminder is not set properly</string>
 
 
 </resources>
