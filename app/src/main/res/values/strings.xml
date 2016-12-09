@@ -41,6 +41,7 @@
     <string name="reminderSetat">Set for </string>
     <string name="at"> at </string>
 
+
     //Error message
     <string name="saveError">Name, amount and date must be filled</string>
     <string name="dateFormatError">Date should be in MM/dd/yyyy format</string>
@@ -50,6 +51,7 @@
     <string name="noRemarksSet">No remarks</string>
     <string name="noReminder">No reminder set</string>
     <string name="reminderNotProper">Reminder is not set properly</string>
+    <string name="editingmodeon">Editing enabled</string>
 
 
 </resources>

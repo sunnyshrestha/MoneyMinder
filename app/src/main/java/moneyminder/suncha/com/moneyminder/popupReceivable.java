@@ -2,6 +2,7 @@ package moneyminder.suncha.com.moneyminder;
 
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.KeyListener;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -35,6 +37,8 @@ public class popupReceivable extends AppCompatActivity {
     ImageView doneEditing;
     @BindView(R.id.cancelEdit)
     ImageView cancelEdit;
+    @BindView(R.id.popupparentlayout)
+    RelativeLayout popupparentlayout;
 
     ImageView editButton;
 
@@ -74,12 +78,40 @@ public class popupReceivable extends AppCompatActivity {
             }
         });
 
+        cancelEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.startAnimation(buttonAnimation);
+                confirmCancelEditDialog();
+            }
+        });
+
+        doneEditing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.startAnimation(buttonAnimation);
+                saveUpdates();
+            }
+        });
+    }
+
+
+    private void confirmCancelEditDialog() {
+        //Create a dialog to confirm that the edit is to be canceled
+        //If yes, set visibility of self to invisible, done to invisible and edit to visible
+        //if no, return as was
+        //disable editing functionality
+    }
+
+    private void saveUpdates() {
+        //save updates and refresh views with updated data
     }
 
     private void startEditing() {
+        Snackbar.make(popupparentlayout, R.string.editingmodeon, Snackbar.LENGTH_SHORT).show();
         enableEditTexts();
         changeReminderButton.setVisibility(View.VISIBLE);
-        editButton.setVisibility(View.GONE);
+        editButton.setVisibility(View.INVISIBLE);
         cancelEdit.setVisibility(View.VISIBLE);
         doneEditing.setVisibility(View.VISIBLE);
 
@@ -115,7 +147,7 @@ public class popupReceivable extends AppCompatActivity {
         amountTV.setText(amount);
         lentDateTV.setText(lentDate);
         if (isReminderActivated == 1) {
-            reminderInfoTV.setText(getResources().getString(R.string.reminderSetat) + " " + reminderDate + " " + getResources().getString(R.string.at) + " " + reminderTime);
+            reminderInfoTV.setText(reminderDate + " " + getResources().getString(R.string.at) + " " + reminderTime);
         } else if (isReminderActivated == 0) {
             reminderInfoTV.setText(getResources().getString(R.string.noReminder));
         } else {

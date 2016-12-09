@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/popupparentlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -25,38 +26,42 @@
             android:text="Sunny Shrestha"
             android:textColor="@color/colorPrimary" />
 
+
         <ImageView
             android:id="@+id/editButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/name"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:src="@drawable/edit_button_selector"
-            android:tint="@color/colorAccent" />
+            android:tint="@color/colorAccent"
+            android:visibility="visible" />
 
         <ImageView
             android:id="@+id/cancelEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/editButton"
             android:layout_alignParentTop="true"
             android:layout_toLeftOf="@+id/editButton"
             android:layout_toStartOf="@+id/editButton"
             android:src="@drawable/ic_action_navigation_cancel"
             android:tint="@color/colorPrimaryDark"
-            android:visibility="visible" />
+            android:visibility="invisible" />
 
         <ImageView
             android:id="@+id/doneEditing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/name"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:layout_below="@id/editButton"
             android:src="@drawable/ic_action_action_done"
             android:tint="@color/colorAccent"
-            android:visibility="visible" />
+            android:visibility="invisible" />
 
     </RelativeLayout>
 
@@ -86,7 +91,7 @@
 
         <TextView
             android:id="@+id/fixedTextAmount"
-            style="@style/Base.TextAppearance.AppCompat.Subhead"
+            style="@style/Base.TextAppearance.Widget.AppCompat.Toolbar.Subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/amountValue"
@@ -115,12 +120,11 @@
             android:layout_toEndOf="@+id/fixedTextDate"
             android:layout_toRightOf="@+id/fixedTextDate"
             android:text="2014/08/12"
-
             android:textAppearance="@style/TextLabel" />
 
         <TextView
             android:id="@+id/fixedTextDate"
-            style="@style/Base.TextAppearance.AppCompat.Subhead"
+            style="@style/Base.TextAppearance.Widget.AppCompat.Toolbar.Subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -137,28 +141,27 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/dateWrapper"
-        android:alpha=".8">
+        android:alpha=".8"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/changeReminder"
-            android:layout_width="wrap_content"
+            android:layout_width="96dp"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginLeft="@dimen/padding"
-            android:layout_toRightOf="@id/reminderDetails"
+            android:layout_alignParentTop="true"
             android:text="@string/change"
-            android:visibility="gone" />
+            android:visibility="invisible" />
 
         <TextView
             android:id="@+id/fixedTextReminder"
-            style="@style/Base.TextAppearance.AppCompat.Subhead"
+            style="@style/Base.TextAppearance.Widget.AppCompat.Toolbar.Subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/changeReminder"
-            android:layout_alignBottom="@+id/changeReminder"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
+            android:layout_marginBottom="@dimen/padding"
             android:text="@string/setReminder"
             android:textColor="@color/colorAccent" />
 
@@ -166,17 +169,14 @@
             android:id="@+id/reminderInfo"
             style="@style/Base.TextAppearance.AppCompat.Subhead"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/changeReminder"
+            android:layout_height="match_parent"
             android:layout_alignBottom="@+id/changeReminder"
-            android:layout_alignParentTop="true"
-            android:layout_marginRight="@dimen/padding"
-            android:layout_toEndOf="@+id/fixedTextReminder"
-            android:layout_toRightOf="@+id/fixedTextReminder"
-            android:paddingLeft="@dimen/padding"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/fixedTextReminder"
+            android:layout_toLeftOf="@id/changeReminder"
             android:paddingRight="@dimen/padding"
-            android:text="Set for 2014/08/08 at 11:45 PM"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+            android:text="2014/08/08 at 11:45 PM" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -185,7 +185,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/reminderLayout"
         android:layout_marginTop="@dimen/padding"
-
         android:alpha=".8">
 
         <EditText
@@ -202,7 +201,7 @@
 
         <TextView
             android:id="@+id/remarksFixedText"
-            style="@style/Base.TextAppearance.AppCompat.Subhead"
+            style="@style/Base.TextAppearance.Widget.AppCompat.Toolbar.Subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
