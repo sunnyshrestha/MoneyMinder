@@ -4,12 +4,17 @@ package moneyminder.suncha.com.moneyminder;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.KeyListener;
+import android.view.View;
 import android.view.Window;
+import android.view.animation.AlphaAnimation;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
 
 public class popupReceivable extends AppCompatActivity {
     String name, amount, lentDate, reminderDate, reminderTime, remarks;
@@ -24,11 +29,21 @@ public class popupReceivable extends AppCompatActivity {
     TextView reminderInfoTV;
     @BindView(R.id.remarksDetails)
     EditText remarksET;
+    @BindView(R.id.changeReminder)
+    Button changeReminderButton;
+    @BindView(R.id.doneEditing)
+    ImageView doneEditing;
+    @BindView(R.id.cancelEdit)
+    ImageView cancelEdit;
+
+    ImageView editButton;
 
     KeyListener nameKeylistener;
     KeyListener amountKeyListener;
     KeyListener lentDateKeyListener;
     KeyListener remarksDateKeyListener;
+
+    private AlphaAnimation buttonAnimation = new AlphaAnimation(1F, 0.7F);
 
 
     @Override
@@ -37,6 +52,8 @@ public class popupReceivable extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.popup_window_receivables);
         ButterKnife.bind(this);
+
+        editButton = (ImageView) findViewById(R.id.editButton);
 
         nameKeylistener = nameTV.getKeyListener();
         amountKeyListener = amountTV.getKeyListener();
@@ -48,6 +65,24 @@ public class popupReceivable extends AppCompatActivity {
 
         //get data from previous intent and load the views
         loadViews();
+
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.startAnimation(buttonAnimation);
+                startEditing();
+            }
+        });
+
+    }
+
+    private void startEditing() {
+        enableEditTexts();
+        changeReminderButton.setVisibility(View.VISIBLE);
+        editButton.setVisibility(View.GONE);
+        cancelEdit.setVisibility(View.VISIBLE);
+        doneEditing.setVisibility(View.VISIBLE);
+
     }
 
     private void disableEditTexts() {
@@ -64,6 +99,7 @@ public class popupReceivable extends AppCompatActivity {
         lentDateTV.setKeyListener(lentDateKeyListener);
         remarksET.setKeyListener(remarksDateKeyListener);
     }
+
 
     private void loadViews() {
 

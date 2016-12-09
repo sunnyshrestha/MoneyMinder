@@ -17,10 +17,11 @@
         <EditText
             android:id="@+id/name"
             style="@style/Base.TextAppearance.AppCompat.Title"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/editButton"
-            android:layout_toStartOf="@+id/editButton"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/cancelEdit"
+            android:layout_toStartOf="@+id/cancelEdit"
             android:text="Sunny Shrestha"
             android:textColor="@color/colorPrimary" />
 
@@ -30,8 +31,32 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/edit_button_selector" />
+            android:layout_alignParentTop="true"
+            android:src="@drawable/edit_button_selector"
+            android:tint="@color/colorAccent" />
+
+        <ImageView
+            android:id="@+id/cancelEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/editButton"
+            android:layout_toStartOf="@+id/editButton"
+            android:src="@drawable/ic_action_navigation_cancel"
+            android:tint="@color/colorPrimaryDark"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/doneEditing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_below="@id/editButton"
+            android:src="@drawable/ic_action_action_done"
+            android:tint="@color/colorAccent"
+            android:visibility="visible" />
 
     </RelativeLayout>
 
@@ -107,30 +132,35 @@
 
     <RelativeLayout
         android:id="@+id/reminderLayout"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/dateWrapper"
-        android:layout_marginTop="@dimen/padding"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/dateWrapper"
         android:alpha=".8">
-
-        <TextView
-            android:id="@+id/fixedTextReminder"
-            style="@style/Base.TextAppearance.AppCompat.Subhead"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:text="@string/setReminder"
-            android:textColor="@color/colorAccent" />
 
         <Button
             android:id="@+id/changeReminder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/padding"
+            android:layout_toRightOf="@id/reminderDetails"
             android:text="@string/change"
             android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/fixedTextReminder"
+            style="@style/Base.TextAppearance.AppCompat.Subhead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/changeReminder"
+            android:layout_alignBottom="@+id/changeReminder"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/setReminder"
+            android:textColor="@color/colorAccent" />
 
         <TextView
             android:id="@+id/reminderInfo"
@@ -139,11 +169,13 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/changeReminder"
             android:layout_alignBottom="@+id/changeReminder"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="@dimen/padding"
             android:layout_toEndOf="@+id/fixedTextReminder"
             android:layout_toRightOf="@+id/fixedTextReminder"
             android:paddingLeft="@dimen/padding"
             android:paddingRight="@dimen/padding"
-            android:text="2014/08/08 at 11:45 PM"
+            android:text="Set for 2014/08/08 at 11:45 PM"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
     </RelativeLayout>
 
@@ -166,7 +198,6 @@
             android:layout_toEndOf="@+id/remarksFixedText"
             android:layout_toRightOf="@+id/remarksFixedText"
             android:text="He took the money for his father's surgery and his mum's cancer treatment"
-
             android:textAppearance="@style/TextLabel" />
 
         <TextView
@@ -181,6 +212,8 @@
             android:paddingTop="@dimen/padding"
             android:text="@string/remarks"
             android:textColor="@color/colorAccent" />
+
+
     </RelativeLayout>
 
 
