@@ -42,7 +42,7 @@
     <string name="at"> at </string>
 
 
-    //Error message
+    //MESSAGES
     <string name="saveError">Name, amount and date must be filled</string>
     <string name="dateFormatError">Date should be in MM/dd/yyyy format</string>
     <string name="recheckDates">Reminder date has to be later than lent date</string>
@@ -52,6 +52,7 @@
     <string name="noReminder">No reminder set</string>
     <string name="reminderNotProper">Reminder is not set properly</string>
     <string name="editingmodeon">Editing enabled</string>
+    <string name="changesSaved">Changes Saved</string>
 
 
 </resources>

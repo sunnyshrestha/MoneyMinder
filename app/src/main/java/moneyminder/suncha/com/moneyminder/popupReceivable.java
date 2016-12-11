@@ -1,18 +1,24 @@
 package moneyminder.suncha.com.moneyminder;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.KeyListener;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,7 +32,7 @@ public class popupReceivable extends AppCompatActivity {
     @BindView(R.id.amountValue)
     EditText amountTV;
     @BindView(R.id.dateLent)
-    EditText lentDateTV;
+    TextView lentDateTV;
     @BindView(R.id.reminderInfo)
     TextView reminderInfoTV;
     @BindView(R.id.remarksDetails)
@@ -74,7 +80,10 @@ public class popupReceivable extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 v.startAnimation(buttonAnimation);
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
                 startEditing();
+
             }
         });
 
@@ -91,6 +100,10 @@ public class popupReceivable extends AppCompatActivity {
             public void onClick(View v) {
                 v.startAnimation(buttonAnimation);
                 saveUpdates();
+                disableEditTexts();
+                doneEditing.setVisibility(View.INVISIBLE);
+                cancelEdit.setVisibility(View.INVISIBLE);
+                editButton.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -105,6 +118,29 @@ public class popupReceivable extends AppCompatActivity {
 
     private void saveUpdates() {
         //save updates and refresh views with updated data
+        String newName = nameTV.getText().toString();
+        String newAmount = amountTV.getText().toString();
+        //TODO GET NEW DATE FROM DATEPICKER
+        //// TODO: 12/11/2016 GET REMINDER FORM DATEPICKER AND DATEPICKER
+        String newRemarks = remarksET.getText().toString();
+
+        if (newName.trim().length() == 0 || newAmount.trim().length() == 0)
+            Toast.makeText(getApplicationContext(), R.string.saveError, Toast.LENGTH_SHORT).show();
+        if (newRemarks.trim().length() == 0)
+            newRemarks = getResources().getString(R.string.noRemarksSet);
+
+        List<ReceivablesModel> receivables = ReceivablesModel.find(ReceivablesModel.class, "name=?", name);
+        if (receivables.size() > 0) {
+            ReceivablesModel editedReceivable = receivables.get(0);
+            editedReceivable.name = newName;
+            editedReceivable.lentAmount = newAmount;
+            editedReceivable.remarks = newRemarks;
+            //TODO ADD EDITED DATES AS WELL
+            editedReceivable.save();
+            Toast.makeText(getApplicationContext(), R.string.changesSaved, Toast.LENGTH_SHORT).show();
+        }
+
+
     }
 
     private void startEditing() {
@@ -116,6 +152,7 @@ public class popupReceivable extends AppCompatActivity {
         doneEditing.setVisibility(View.VISIBLE);
 
     }
+
 
     private void disableEditTexts() {
         nameTV.setKeyListener(null);
