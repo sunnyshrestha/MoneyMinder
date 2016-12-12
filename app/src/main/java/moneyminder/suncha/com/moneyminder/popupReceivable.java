@@ -1,32 +1,39 @@
 package moneyminder.suncha.com.moneyminder;
 
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.KeyListener;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
-public class popupReceivable extends AppCompatActivity {
+public class popupReceivable extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
     String name, amount, lentDate, reminderDate, reminderTime, remarks;
-    int isReminderActivated;
     @BindView(R.id.name)
     EditText nameTV;
     @BindView(R.id.amountValue)
@@ -45,16 +52,21 @@ public class popupReceivable extends AppCompatActivity {
     ImageView cancelEdit;
     @BindView(R.id.popupparentlayout)
     RelativeLayout popupparentlayout;
-
+    @BindView(R.id.editLentDate)
+    Button editLentDate;
     ImageView editButton;
 
     KeyListener nameKeylistener;
     KeyListener amountKeyListener;
     KeyListener lentDateKeyListener;
     KeyListener remarksDateKeyListener;
-
+    FragmentManager fragmentManager = getSupportFragmentManager();
+    String finalDateLent;
     private AlphaAnimation buttonAnimation = new AlphaAnimation(1F, 0.7F);
-
+    private int datePickerID = -1; //If this is 1, then it refers to lend date picker and if it is 2, it refers to reminder date
+    private String newReminderDate = null;
+    private String newReminderTime = null;
+    private int isReminderActivated = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,15 +111,34 @@ public class popupReceivable extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 v.startAnimation(buttonAnimation);
-                saveUpdates();
-                disableEditTexts();
-                doneEditing.setVisibility(View.INVISIBLE);
-                cancelEdit.setVisibility(View.INVISIBLE);
-                editButton.setVisibility(View.VISIBLE);
+                if (newReminderDate != null && newReminderTime != null) {
+                    isReminderActivated = 1;
+                    checkDateOrder(lentDateTV.getText().toString(), newReminderDate);
+                } else {
+                    saveUpdates();
+                    disableEditTexts();
+                    doneEditing.setVisibility(View.INVISIBLE);
+                    cancelEdit.setVisibility(View.INVISIBLE);
+                    editButton.setVisibility(View.VISIBLE);
+                    editLentDate.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+
+        changeReminderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editReminder();
             }
         });
     }
 
+    @OnClick(R.id.editLentDate)
+    public void editLentDate() {
+        datePickerID = 1;
+        datePicker pickDate = new datePicker();
+        pickDate.show(fragmentManager, "EDIT LENT DATE");
+    }
 
     private void confirmCancelEditDialog() {
         //Create a dialog to confirm that the edit is to be canceled
@@ -120,14 +151,17 @@ public class popupReceivable extends AppCompatActivity {
         //save updates and refresh views with updated data
         String newName = nameTV.getText().toString();
         String newAmount = amountTV.getText().toString();
-        //TODO GET NEW DATE FROM DATEPICKER
-        //// TODO: 12/11/2016 GET REMINDER FORM DATEPICKER AND DATEPICKER
+        String newLentDate = lentDateTV.getText().toString();
         String newRemarks = remarksET.getText().toString();
+        String NewReminderDate = finalDateLent;
+        String NewReminderTime = newReminderTime;
 
-        if (newName.trim().length() == 0 || newAmount.trim().length() == 0)
+
+        if (newName.trim().length() == 0 || newAmount.trim().length() == 0 || newLentDate.trim().length() == 0)
             Toast.makeText(getApplicationContext(), R.string.saveError, Toast.LENGTH_SHORT).show();
         if (newRemarks.trim().length() == 0)
             newRemarks = getResources().getString(R.string.noRemarksSet);
+
 
         List<ReceivablesModel> receivables = ReceivablesModel.find(ReceivablesModel.class, "name=?", name);
         if (receivables.size() > 0) {
@@ -135,12 +169,12 @@ public class popupReceivable extends AppCompatActivity {
             editedReceivable.name = newName;
             editedReceivable.lentAmount = newAmount;
             editedReceivable.remarks = newRemarks;
-            //TODO ADD EDITED DATES AS WELL
+            editedReceivable.reminderDate = NewReminderDate;
+            editedReceivable.reminderTime = NewReminderTime;
+            editedReceivable.isReminderActivated = isReminderActivated;
             editedReceivable.save();
             Toast.makeText(getApplicationContext(), R.string.changesSaved, Toast.LENGTH_SHORT).show();
         }
-
-
     }
 
     private void startEditing() {
@@ -150,16 +184,14 @@ public class popupReceivable extends AppCompatActivity {
         editButton.setVisibility(View.INVISIBLE);
         cancelEdit.setVisibility(View.VISIBLE);
         doneEditing.setVisibility(View.VISIBLE);
-
+        editLentDate.setVisibility(View.VISIBLE);
     }
-
 
     private void disableEditTexts() {
         nameTV.setKeyListener(null);
         amountTV.setKeyListener(null);
         lentDateTV.setKeyListener(null);
         remarksET.setKeyListener(null);
-
     }
 
     private void enableEditTexts() {
@@ -171,7 +203,6 @@ public class popupReceivable extends AppCompatActivity {
 
 
     private void loadViews() {
-
         name = getIntent().getStringExtra("name");
         amount = getIntent().getStringExtra("amount");
         lentDate = getIntent().getStringExtra("date");
@@ -191,8 +222,89 @@ public class popupReceivable extends AppCompatActivity {
             reminderInfoTV.setText("Error is happens");
         }
         remarksET.setText(remarks);
-
     }
 
+    private void editReminder() {
+        //Call datepicker and time picker and set date and time of reminder to reminderInfoTV
+        datePickerID = 2;
+        datePicker selectDateFragment = new datePicker();
+        selectDateFragment.show(fragmentManager, "EDITED REMINDER DATE");
+    }
 
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        int monthActual = month + 1;
+
+        StringBuilder tempDate = new StringBuilder();
+        tempDate.append(year);
+        tempDate.append("-");
+        if (monthActual < 10) {
+            tempDate.append(0);
+        }
+        tempDate.append(monthActual);
+        tempDate.append("-");
+        if (dayOfMonth < 10) {
+            tempDate.append(0);
+        }
+        tempDate.append(dayOfMonth);
+
+        switch (datePickerID) {
+            case 1:
+                finalDateLent = tempDate.toString();
+                lentDateTV.setText(finalDateLent);
+                break;
+            case 2:
+                newReminderDate = tempDate.toString();
+                reminderInfoTV.setText(newReminderDate);
+                TimePickerFragment pickTime = new TimePickerFragment();
+                pickTime.show(fragmentManager, "REMINDER_TIME");
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        String amOrpm;
+        if (hourOfDay > 12) {
+            hourOfDay = hourOfDay - 12;
+            amOrpm = "pm";
+        } else if (hourOfDay == 12) {
+            amOrpm = "pm";
+        } else
+            amOrpm = "am";
+        StringBuilder tempReminderTime = new StringBuilder();
+        tempReminderTime.append(hourOfDay);
+        tempReminderTime.append(":");
+        if (minute < 10) {
+            tempReminderTime.append(0);
+        }
+        tempReminderTime.append(minute);
+        tempReminderTime.append(" ");
+        tempReminderTime.append(amOrpm);
+        String actualReminderTime = tempReminderTime.toString();
+        newReminderTime = actualReminderTime;
+        reminderInfoTV.append(" at " + actualReminderTime);
+    }
+
+    //Method that checks if the reminder date is after the lent date or not
+    public void checkDateOrder(String lentDate, String reminderDate) {
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date lent = simpleDateFormat.parse(lentDate);
+            Date reminder = simpleDateFormat.parse(reminderDate);
+
+            if (lent.after(reminder) || lent.equals(reminder)) {
+                //Throw a toast asking the user to recheck dates. Reminder date has to be later than lent date
+                Toast.makeText(getApplicationContext(), R.string.recheckDates, Toast.LENGTH_SHORT).show();
+            } else {
+                //WRITE DATA TO DATABASE
+                Toast.makeText(getApplicationContext(), "Changes Saved", Toast.LENGTH_SHORT).show();
+                saveUpdates();
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
 }

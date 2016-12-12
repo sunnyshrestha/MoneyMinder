@@ -114,16 +114,6 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
         }
     }
 
-    //Call reminder time after reminder date is set
-/*    public void reminderTime() {
-        Calendar nowTime = Calendar.getInstance();
-*//*        GridTimePickerDialog timeDialog = GridTimePickerDialog.newInstance(
-                ReceivableDetails.this,
-                nowTime.get(Calendar.HOUR_OF_DAY),
-                nowTime.get(Calendar.MINUTE),
-                DateFormat.is24HourFormat(ReceivableDetails.this));
-        timeDialog.show(getSupportFragmentManager(), "reminderTime");*//*
-    }*/
 
     @OnClick(R.id.lentDateButton)
     public void pickDate() {
@@ -232,7 +222,6 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
                 lentdate.setText(dateLent);
                 break;
             case 2:
-//                reminderTime();
                 reminderDetailsWrapper.setVisibility(View.VISIBLE);
                 reminderDateChosenbyUser = tempDate.toString();
                 reminderDetails.setText(getResources().getText(R.string.reminderText) + " " + reminderDateChosenbyUser);
@@ -271,7 +260,6 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
 
     //Method that checks if the reminder date is after the lent date or not
     public void checkDateOrder(String lentDate, String reminderDate) {
-        //checks if the followup date is after the meetingDate or not
         try {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             Date lent = simpleDateFormat.parse(lentDate);
