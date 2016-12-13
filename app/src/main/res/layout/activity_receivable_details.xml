@@ -36,15 +36,12 @@
             android:layout_marginRight="@dimen/activity_vertical_margin"
             android:layout_marginTop="@dimen/padding">
 
-            <com.github.florent37.materialtextfield.MaterialTextField
+            <android.support.design.widget.TextInputLayout
                 android:id="@+id/nameOfLenderWrapper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:mtf_animationDuration="150"
-                app:mtf_cardCollapsedHeight="1dp"
-                app:mtf_image="@drawable/ic_action_face_unlock"
-                app:mtf_labelColor="@color/white"
-                app:mtf_openKeyboardOnFocus="true">
+                android:textColorHint="@color/white"
+                android:theme="@style/TextLabel">
 
                 <EditText
                     android:id="@+id/nameOfLender"
@@ -52,30 +49,29 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/whoDidYouLendItTo"
                     android:inputType="textPersonName|textCapWords"
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    android:textColor="@color/white" />
 
-            </com.github.florent37.materialtextfield.MaterialTextField>
+            </android.support.design.widget.TextInputLayout>
 
-            <com.github.florent37.materialtextfield.MaterialTextField
+            <android.support.design.widget.TextInputLayout
                 android:id="@+id/amountLentWrapper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/nameOfLenderWrapper"
                 android:layout_marginTop="@dimen/padding"
-                app:mtf_animationDuration="150"
-                app:mtf_cardCollapsedHeight="1dp"
-                app:mtf_image="@drawable/ic_23_512"
-                app:mtf_labelColor="@color/white"
-                app:mtf_openKeyboardOnFocus="true">
+                android:textColorHint="@color/white"
+                android:theme="@style/TextLabel">
 
-                <com.blackcat.currencyedittext.CurrencyEditText
+                <EditText
                     android:id="@+id/amountLent"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/totalAmountLent"
+                    android:inputType="numberDecimal"
                     android:maxLines="1"
-                    app:enable_default_hint="false"/>
-            </com.github.florent37.materialtextfield.MaterialTextField>
+                    android:textColor="@color/white" />
+            </android.support.design.widget.TextInputLayout>
 
             <RelativeLayout
                 android:id="@+id/dateLayout"

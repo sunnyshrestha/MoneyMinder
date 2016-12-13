@@ -61,11 +61,12 @@ public class popupReceivable extends AppCompatActivity implements DatePickerDial
     KeyListener lentDateKeyListener;
     KeyListener remarksDateKeyListener;
     FragmentManager fragmentManager = getSupportFragmentManager();
-    String finalDateLent;
+    String finalDate;
+    String finalReminderDate = null;
     private AlphaAnimation buttonAnimation = new AlphaAnimation(1F, 0.7F);
     private int datePickerID = -1; //If this is 1, then it refers to lend date picker and if it is 2, it refers to reminder date
-    private String newReminderDate = null;
-    private String newReminderTime = null;
+    //    private String newReminderDate;
+    private String newReminderTime;
     private int isReminderActivated = 0;
 
     @Override
@@ -111,26 +112,29 @@ public class popupReceivable extends AppCompatActivity implements DatePickerDial
             @Override
             public void onClick(View v) {
                 v.startAnimation(buttonAnimation);
-                if (newReminderDate != null && newReminderTime != null) {
-                    isReminderActivated = 1;
-                    checkDateOrder(lentDateTV.getText().toString(), newReminderDate);
+                if (finalReminderDate != null && newReminderTime != null) {
+//                    isReminderActivated = 1;
+                    checkDateOrder(lentDateTV.getText().toString(), finalReminderDate);
                 } else {
-                    saveUpdates();
-                    disableEditTexts();
-                    doneEditing.setVisibility(View.INVISIBLE);
-                    cancelEdit.setVisibility(View.INVISIBLE);
-                    editButton.setVisibility(View.VISIBLE);
-                    editLentDate.setVisibility(View.INVISIBLE);
+                    saveAllChanges();
                 }
             }
         });
-
         changeReminderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 editReminder();
             }
         });
+    }
+
+    private void saveAllChanges() { //just to call save updates and update views
+        saveUpdates();
+        disableEditTexts();
+        doneEditing.setVisibility(View.INVISIBLE);
+        cancelEdit.setVisibility(View.INVISIBLE);
+        editButton.setVisibility(View.VISIBLE);
+        editLentDate.setVisibility(View.INVISIBLE);
     }
 
     @OnClick(R.id.editLentDate)
@@ -153,7 +157,7 @@ public class popupReceivable extends AppCompatActivity implements DatePickerDial
         String newAmount = amountTV.getText().toString();
         String newLentDate = lentDateTV.getText().toString();
         String newRemarks = remarksET.getText().toString();
-        String NewReminderDate = finalDateLent;
+        String NewReminderDate = finalReminderDate;
         String NewReminderTime = newReminderTime;
 
 
@@ -168,6 +172,7 @@ public class popupReceivable extends AppCompatActivity implements DatePickerDial
             ReceivablesModel editedReceivable = receivables.get(0);
             editedReceivable.name = newName;
             editedReceivable.lentAmount = newAmount;
+            editedReceivable.lentDate = newLentDate;
             editedReceivable.remarks = newRemarks;
             editedReceivable.reminderDate = NewReminderDate;
             editedReceivable.reminderTime = NewReminderTime;
@@ -247,17 +252,18 @@ public class popupReceivable extends AppCompatActivity implements DatePickerDial
             tempDate.append(0);
         }
         tempDate.append(dayOfMonth);
+        finalDate = tempDate.toString();
 
         switch (datePickerID) {
             case 1:
-                finalDateLent = tempDate.toString();
-                lentDateTV.setText(finalDateLent);
+                lentDateTV.setText(finalDate);
                 break;
             case 2:
-                newReminderDate = tempDate.toString();
-                reminderInfoTV.setText(newReminderDate);
+                finalReminderDate = finalDate;
+                reminderInfoTV.setText(finalDate);
                 TimePickerFragment pickTime = new TimePickerFragment();
                 pickTime.show(fragmentManager, "REMINDER_TIME");
+                isReminderActivated = 1;
                 break;
             default:
                 break;
@@ -301,7 +307,7 @@ public class popupReceivable extends AppCompatActivity implements DatePickerDial
             } else {
                 //WRITE DATA TO DATABASE
                 Toast.makeText(getApplicationContext(), "Changes Saved", Toast.LENGTH_SHORT).show();
-                saveUpdates();
+                saveAllChanges();
             }
         } catch (ParseException e) {
             e.printStackTrace();

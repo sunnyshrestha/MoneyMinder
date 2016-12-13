@@ -22,8 +22,6 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.blackcat.currencyedittext.CurrencyEditText;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -57,7 +55,7 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
     @BindView(R.id.nameOfLender)
     EditText nameOfLender;
     @BindView(R.id.amountLent)
-    CurrencyEditText amountLent;
+    EditText amountLent;
     @BindView(R.id.remarks)
     EditText remarks;
 
@@ -86,7 +84,6 @@ public class ReceivableDetails extends AppCompatActivity implements DatePickerDi
             public void onClick(View v) {
                 createAlertDialog();
 
-                amountLent.setDefaultHintEnabled(false);
             }
         });
 
